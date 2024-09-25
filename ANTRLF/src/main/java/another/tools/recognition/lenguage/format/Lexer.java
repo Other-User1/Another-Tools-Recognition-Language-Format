@@ -37,7 +37,7 @@ public class Lexer {
 					if (token != null) {
 						tokens.add(token);
 					} else {
-						if (letter.length() > 1) {
+						if (letter.length() != 1) {
 							tokens.add(new Token(letter.toString(), TypeToken.IdentifierToken));
 						} else {
 							tokens.add(new Token(letter.toString(), TypeToken.LetterToken));
@@ -53,7 +53,7 @@ public class Lexer {
 					digit.append(input.charAt(position));
 					position++;
 				}
-				if (digit.length() > 1) {
+				if (digit.length() == 1) {
 					tokens.add(new Token(digit.toString(), TypeToken.DigitToken));
 				} else {
 					tokens.add(new Token(digit.toString(), TypeToken.NumberToken));

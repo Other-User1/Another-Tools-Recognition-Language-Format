@@ -68,7 +68,9 @@ public class Syntactic {
 				if (tokens.get(currentTokenIndex - 1).getType() != TypeToken.EndOfFileToken) {
 					if (i == 1) {
 						int tmp2 = grammarList.get(index).gramatical.getExpectedTokens().length;
-						throw new RuntimeException("Length not margin in: " + tokens.get(verifyLength - 1).getType() + ", only recognition '" + grammarList.get(index).gramatical.getExpectedTokens()[tmp2 - 1] + "'");
+						verifyLength -= 1;
+						if (verifyLength == -1) verifyLength = 0;
+						throw new RuntimeException("Length not margin in: " + tokens.get(verifyLength).getType() + ", only recognition '" + grammarList.get(index).gramatical.getExpectedTokens()[tmp2 - 1] + "'");
 					}
 					throw new RuntimeException("Rule not margin in: " + tokens.get(tmp).getValue());
 				}
