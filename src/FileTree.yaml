@@ -1,0 +1,43 @@
+java:
+  another:
+    tools:
+      recognition:
+        language:
+          format:
+            - grammaticals:
+              - AlternativesGrammatical
+              - Grammar
+              - Grammatical
+              - GrammaticalAction
+              - GrammaticalGrammar
+              - OneOrMoreGrammatical
+              - OptionalGrammatical
+              - PermitRangeGrammatical
+              - RangeGrammatical
+              - SequenceGrammatical
+              - ZeroOrMoreGrammatical
+            - lexer:
+                - Lexer
+                - LexerTokenizer
+            - rules:
+                - AlternativeRule
+                - CharacterRule
+                - CharacterRangeRule
+                - NoteRule
+                - OneOrMoreRule
+                - OptionalRule
+                - PermitRangeRule
+                - RangeRule
+                - Rule
+                - SequenceRule
+                - TextRule
+                - ZeroOrMoreRule
+            - syntactic:
+                - Syntactic
+                - SyntacticAction
+                - SyntacticGrammatical
+            - tokens:
+                - SpecialTokenType
+                - Token
+                - TokenText
+                - TokenType

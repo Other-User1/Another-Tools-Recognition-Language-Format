@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.example.code'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+application {
+    applicationDefaultJvmArgs = ["-Dproject.name=${project.name}", "-DmainClassName=com.example.code.Main"]
+    mainClassName = 'com.example.code.Main'
+}
+
+compileJava {
+    options.compilerArgs = ['--enable-preview', '-parameters']
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_23
+    targetCompatibility JavaVersion.VERSION_23
+}
