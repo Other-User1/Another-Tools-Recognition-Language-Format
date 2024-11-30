@@ -1,4 +1,4 @@
-package another.tools.recognition.language.format.tokens;
+package another.tools.recognition.language.format.Tokens;
 
 import another.tools.recognition.language.format.Grammaticals.Grammatical;
 import another.tools.recognition.language.format.Grammaticals.SequenceGrammatical;
@@ -31,9 +31,9 @@ public enum TokenType implements Grammatical {
 	LowLineToken, // _
 	QuotationToken, // "
 	ApostropheToken, // '
-	PlusToken; // +
+	PlusToken, SlashToken, StarToken; // +
 
-	private Grammatical grammar;
+	private Grammatical grammar = new SequenceGrammatical();
 	private static int position = -1;
 
 	static void setPosition(int position) {
@@ -42,6 +42,7 @@ public enum TokenType implements Grammatical {
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) {
+		TokenType.position = position;
 		if (list.get(position).getImage().equals("\0")) {
 			return new ArrayList<>(list.subList(position - 1, position));
 		}
@@ -49,19 +50,22 @@ public enum TokenType implements Grammatical {
 			grammar = new SequenceGrammatical((Grammatical) list.get(position).getType());
 			return new ArrayList<>(list.subList(position, position + 1));
 		}
-		TokenType.position = position;
 		return null;
 	}
 
 	public static ArrayList<Token> isMatchUtil(ArrayList<Token> list, int position, String name) {
+		TokenType.position = position;
 		if (list.get(position).getImage().equals("\0")) {
 			return null;
 		}
 		if (list.get(position).getType().toString().equals(name)) {
 			return new ArrayList<>(list.subList(position, position + 1));
 		}
-		TokenType.position = position;
 		return null;
+	}
+
+	public static ArrayList<Grammatical> getGrammarUtil(String name) {
+		return new ArrayList<>(List.of(new TokenText(name)));
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package another.tools.recognition.language.format.Grammaticals;
 
-import another.tools.recognition.language.format.tokens.Token;
+import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
@@ -11,6 +11,10 @@ public final class SequenceGrammatical implements Grammatical {
 
 	public SequenceGrammatical(Grammatical... grammars) {
 		this.grammars = new ArrayList<>(List.of(grammars));
+	}
+
+	SequenceGrammatical(ArrayList<Grammatical> tmp2) {
+		grammars = tmp2;
 	}
 
 	@Override

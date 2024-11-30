@@ -1,9 +1,11 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
+
+import com.java.components.lang.CompilerTaskException;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SequenceRule extends Rule {
+public class SequenceRule implements Rule {
 	private final List<Rule> rules;
 
 	public SequenceRule(Rule... rules) {
@@ -11,9 +13,8 @@ public class SequenceRule extends Rule {
 	}
 
 	@Override
-	public String match(String input, int position) {
+	public String match(String input, int position) throws CompilerTaskException {
 		StringBuilder result = new StringBuilder();
-		int initialPosition = position;
 
 		for (Rule rule : rules) {
 			String matched = rule.match(input, position);

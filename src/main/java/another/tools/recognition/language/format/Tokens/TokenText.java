@@ -1,4 +1,4 @@
-package another.tools.recognition.language.format.tokens;
+package another.tools.recognition.language.format.Tokens;
 
 import another.tools.recognition.language.format.Grammaticals.Grammatical;
 import another.tools.recognition.language.format.Grammaticals.SequenceGrammatical;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class TokenText implements Grammatical {
 	private final String text;
-	private Grammatical grammar;
+	private Grammatical grammar = new SequenceGrammatical();
 
 	public TokenText(String text) {
 		this.text = text;

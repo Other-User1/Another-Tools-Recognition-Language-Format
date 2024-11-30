@@ -1,6 +1,6 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
 
-public class CharacterRangeRule extends Rule {
+public class CharacterRangeRule implements Rule {
 	private final char min;
 	private final char max;
 

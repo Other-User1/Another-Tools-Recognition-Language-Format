@@ -1,6 +1,8 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
 
-public class RangeRule extends Rule {
+import com.java.components.lang.CompilerTaskException;
+
+public class RangeRule implements Rule {
 	private final Rule rule;
 	private final int min;
 	private final int max;
@@ -12,7 +14,7 @@ public class RangeRule extends Rule {
 	}
 
 	@Override
-	public String match(String input, int position) {
+	public String match(String input, int position) throws CompilerTaskException {
 		StringBuilder result = new StringBuilder();
 		String matched;
 		final String match = rule.match(input, position);

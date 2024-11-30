@@ -1,7 +1,7 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
 
-public class TextRule extends Rule {
-	private final String text;
+public class TextRule implements Rule {
+	final String text;
 
 	public TextRule(String text) {
 		this.text = text;

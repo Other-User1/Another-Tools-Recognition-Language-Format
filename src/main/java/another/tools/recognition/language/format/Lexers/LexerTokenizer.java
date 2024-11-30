@@ -1,9 +1,9 @@
-package another.tools.recognition.language.format.lexers;
+package another.tools.recognition.language.format.Lexers;
 
-import another.tools.recognition.language.format.rules.*;
+import another.tools.recognition.language.format.Rules.*;
+import another.tools.recognition.language.format.Tokens.SpecialTokenType;
+import com.java.components.lang.CompilerTaskException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public abstract class LexerTokenizer {
@@ -25,23 +25,6 @@ public abstract class LexerTokenizer {
 		return new CharacterRangeRule(min, max);
 	}
 
-	public final AlternativesRule CharacterRange(char... targets) {
-		return getCharacterRange(targets);
-	}
-
-	private AlternativesRule getCharacterRange(char... targets) {
-		AlternativesRule ar;
-		ArrayList<Rule> rule = new ArrayList<>();
-		int min = targets.length / 2;
-		for (int i = 0; i < min; i += 2) {
-			rule.add(new CharacterRangeRule(targets[i], targets[i + 1]));
-		}
-		Rule[] rules = rule.toArray(new Rule[0]);
-		return new AlternativesRule(rules);
-	}
-
-	// public final CharacterPermitRangeRule CharacterPermitRange(char target, int... permit) { return new CharacterPermitRangeRule(target, permit); }
-
 	public final TextRule Text(String text) {
 		return new TextRule(text);
 	}
@@ -62,21 +45,29 @@ public abstract class LexerTokenizer {
 		return new RangeRule(rule, min, max);
 	}
 
-	public final PermitRangeRule PermitRange(Rule rule, int... permit) {
-		return new PermitRangeRule(rule, permit);
+	public final RepeatRule Repeat(Rule rule, int permit) {
+		return new RepeatRule(rule, permit);
 	}
 
 	public final NotRule Not(Rule rule) {
 		return new NotRule(rule);
 	}
 
+	public final Rules SubRules(Rules rule) {
+		return rule;
+	}
+
+	public final AnyRule Any() {
+		return new AnyRule();
+	}
+
 	public final Rule Token(Rule rule, Enum<?> type) {
 		if (type.getDeclaringClass().toString().equals("class another.tools.recognition.language.format.tokens.SpecialTokenType")) {
 			throw new RuntimeException("invalid use this enum!");
 		}
-		return new Rule(type) {
+		return new Rule() {
 			@Override
-			public String match(String input, int position) {
+			public String match(String input, int position) throws CompilerTaskException {
 				String matched = rule.match(input, position);
 				if (matched != null) {
 					types.put(matched, type);
@@ -86,9 +77,26 @@ public abstract class LexerTokenizer {
 		};
 	}
 
-	public abstract Rule execute();
+	public final Rule Token(Rule rule) {
+		return Token(rule, SpecialTokenType.UndefinedToken);
+	}
+
+	public final Rule Token(Rule rule, RuleAction action) {
+		return new Rule() {
+			@Override
+			public String match(String input, int position) throws CompilerTaskException {
+				String matched = rule.match(input, position);
+				if (matched != null) {
+					types.put(matched, action.execute(matched));
+				}
+				return matched;
+			}
+		};
+	}
 
 	public Rule skip() {
 		return null;
 	}
+
+	public abstract Rule execute() throws CompilerTaskException;
 }

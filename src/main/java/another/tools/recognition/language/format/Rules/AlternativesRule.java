@@ -1,9 +1,11 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
+
+import com.java.components.lang.CompilerTaskException;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class AlternativesRule extends Rule {
+public class AlternativesRule implements Rule {
 	private final List<Rule> rules;
 
 	public AlternativesRule(Rule... rules) {
@@ -11,7 +13,7 @@ public class AlternativesRule extends Rule {
 	}
 
 	@Override
-	public String match(String input, int position) {
+	public String match(String input, int position) throws CompilerTaskException {
 		for (Rule rule : rules) {
 			String matched = rule.match(input, position);
 			if (matched != null) {

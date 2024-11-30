@@ -1,6 +1,6 @@
 package another.tools.recognition.language.format.Grammaticals;
 
-import another.tools.recognition.language.format.tokens.Token;
+import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
@@ -15,13 +15,20 @@ public class ZeroOrMoreGrammatical implements Grammatical {
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
-		ArrayList<Token> result = new ArrayList<>();
-		ArrayList<Token> matched = new ArrayList<>();
+		if (grammar instanceof GrammaticalGrammar) throw new CompilerTaskException("cannot first is GrammaticalGrammar!");
+		ArrayList<Token> matched = grammar.match(list, position);
 
-		do {
+		if (matched == null) {
+			return new ArrayList<>();
+		}
+
+		ArrayList<Token> result = new ArrayList<>(matched);
+		position += matched.size();
+
+		while (position < list.size() && (matched = grammar.match(list, position)) != null) {
 			result.addAll(matched);
 			position += matched.size();
-		} while (position < list.size() && (matched = grammar.match(list, position)) != null);
+		}
 
 		return result;
 	}

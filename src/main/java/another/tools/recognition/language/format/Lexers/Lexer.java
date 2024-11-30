@@ -1,7 +1,7 @@
-package another.tools.recognition.language.format.lexers;
+package another.tools.recognition.language.format.Lexers;
 
-import another.tools.recognition.language.format.rules.*;
-import another.tools.recognition.language.format.tokens.*;
+import another.tools.recognition.language.format.Rules.*;
+import another.tools.recognition.language.format.Tokens.*;
 import com.java.components.lang.CompilerTaskException;
 
 import java.io.*;
@@ -66,7 +66,7 @@ public final class Lexer {
 			}
 			this.kind++;
 		}
-		this.tokens.add(new Token('\0', SpecialTokenType.EndOfFileToken));
+		this.tokens.add(new Token('\0', SpecialTokenType.EndOfFileToken, this.kind++));
 		if (this.tokens.size() <= 2) {
 			System.err.println("Please add more type for more tokens!");
 			try {
@@ -78,7 +78,7 @@ public final class Lexer {
 		return this.tokens;
 	}
 
-	private Token matchRule(Rule rule) {
+	private Token matchRule(Rule rule) throws CompilerTaskException {
 		if (rule == null) return null;
 		int oldPosition = this.position;
 		String value = rule.match(this.input, this.position);

@@ -1,6 +1,6 @@
 package another.tools.recognition.language.format.Grammaticals;
 
-import another.tools.recognition.language.format.tokens.Token;
+import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
@@ -23,8 +23,6 @@ public abstract class GrammaticalAction implements Grammatical {
 		}
 		ArrayList<Token> subResult = new ArrayList<>(matched);
 
-		System.out.println(subResult);
-
 		return run(subResult) == null ? new ArrayList<>() : run(subResult);
 	}
 
@@ -35,7 +33,11 @@ public abstract class GrammaticalAction implements Grammatical {
 
 	public abstract ArrayList<Token> run(ArrayList<Token> tokens);
 
-	public interface Action {
-		public ArrayList<Token> run(ArrayList<Token> tokens);
+	public static abstract class Action {
+		public abstract Token run(ArrayList<Token> tokens);
+		public final Token Token(String image, Enum<?> type) { return new Token(image, type); }
+		public final Token Token(Number image, Enum<?> type) { return Token(String.valueOf(image), type); }
+		public final Token Token(boolean image, Enum<?> type) { return Token(String.valueOf(image), type); }
+		public final Token Token(char image, Enum<?> type) { return Token(String.valueOf(image), type); }
 	}
 }

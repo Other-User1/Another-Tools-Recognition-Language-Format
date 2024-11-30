@@ -1,4 +1,4 @@
-package another.tools.recognition.language.format.tokens;
+package another.tools.recognition.language.format.Tokens;
 
 public class Token {
 	private final String image;
@@ -20,6 +20,14 @@ public class Token {
 
 	public Token(String image, Enum<?> type) {
 		this(image, type, -1, -1, -1, -1, -1);
+	}
+
+	public Token(String image, Enum<?> type, int id) {
+		this(image, type, -1, -1, id);
+	}
+
+	public Token(char image, Enum<?> type, int id) {
+		this(String.valueOf(image), type, -1, -1, id);
 	}
 
 	public Token(char image, Enum<?> type, int position, int line, int id) {

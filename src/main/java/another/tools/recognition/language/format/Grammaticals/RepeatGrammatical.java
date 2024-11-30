@@ -1,19 +1,18 @@
 package another.tools.recognition.language.format.Grammaticals;
 
-import another.tools.recognition.language.format.tokens.Token;
-import another.tools.recognition.language.format.tokens.TokenType;
+import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PermitRangeGrammatical implements Grammatical {
+public class RepeatGrammatical implements Grammatical {
 	private final Grammatical rule;
-	private final int[] permits;
+	private final int permit;
 
-	public PermitRangeGrammatical(Grammatical rule, int... permits) {
+	public RepeatGrammatical(Grammatical rule, int permit) {
 		this.rule = rule;
-		this.permits = permits;
+		this.permit = permit;
 	}
 
 	@Override
@@ -33,10 +32,8 @@ public class PermitRangeGrammatical implements Grammatical {
 			position += matched.size();
 		}
 
-		for (int permit : this.permits) {
-			if (result.size() == repeat(match, permit)) {
-				return result;
-			}
+		if (result.size() == repeat(match, permit)) {
+			return result;
 		}
 
 		return null;

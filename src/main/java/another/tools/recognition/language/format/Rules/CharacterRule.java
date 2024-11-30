@@ -1,6 +1,6 @@
-package another.tools.recognition.language.format.rules;
+package another.tools.recognition.language.format.Rules;
 
-public class CharacterRule extends Rule {
+public class CharacterRule implements Rule {
 	private final char character;
 
 	public CharacterRule(char character) {

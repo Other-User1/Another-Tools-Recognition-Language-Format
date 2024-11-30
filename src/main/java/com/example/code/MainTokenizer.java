@@ -1,14 +1,17 @@
 package com.example.code;
 
-import another.tools.recognition.language.format.lexers.LexerTokenizer;
-import another.tools.recognition.language.format.rules.Rule;
-import another.tools.recognition.language.format.tokens.TokenType;
-import com.example.code.tmp.Main;
+import another.tools.recognition.language.format.Lexers.LexerTokenizer;
+import another.tools.recognition.language.format.Rules.Rule;
+import another.tools.recognition.language.format.Rules.RuleAction;
+
+import static another.tools.recognition.language.format.Tokens.TokenType.*;
+
+import static com.example.code.ExtraTokenType.*;
 
 public class MainTokenizer extends LexerTokenizer {
 	@Override
 	public Rule skip() {
-		return ZeroOrMore(
+		return OneOrMore(
 				Alternatives(
 					Character(' '),
 					Character('\r'),
@@ -31,20 +34,26 @@ public class MainTokenizer extends LexerTokenizer {
 
 	public Rule keywords() {
 		return Alternatives(
-				Token(Text("module"), com.example.code.tmp.Main.ExtraTokenType.ModuleToken),
-				Token(Text("package"), com.example.code.tmp.Main.ExtraTokenType.PackageToken),
-				Token(Text("import"), com.example.code.tmp.Main.ExtraTokenType.ImportToken),
-				Token(Text("static"), com.example.code.tmp.Main.ExtraTokenType.StaticToken),
-				Token(Text("public"), com.example.code.tmp.Main.ExtraTokenType.PublicToken),
-				Token(Text("private"), com.example.code.tmp.Main.ExtraTokenType.PrivateToken),
-				Token(Text("protected"), com.example.code.tmp.Main.ExtraTokenType.ProtectedToken),
-				Token(Text("sealed"), com.example.code.tmp.Main.ExtraTokenType.SealedToken),
-				Token(Text("protected"), com.example.code.tmp.Main.ExtraTokenType.ProtectedToken),
-				Token(Text("abstract"), com.example.code.tmp.Main.ExtraTokenType.AbstractToken),
-				Token(Text("final"), com.example.code.tmp.Main.ExtraTokenType.FinalToken),
-				Token(Text("native"), com.example.code.tmp.Main.ExtraTokenType.NativeToken),
-				Token(Text("neutral"), com.example.code.tmp.Main.ExtraTokenType.NeutralToken),
-				Token(Character('0'), com.example.code.tmp.Main.ExtraTokenType.NeutralToken)
+				Token(Text("module"), ModuleToken),
+				Token(Text("package"), PackageToken),
+				Token(Text("import"), ImportToken),
+				Token(Text("static"), StaticToken),
+				Token(Text("public"), PublicToken),
+				Token(Text("private"), PrivateToken),
+				Token(Text("protected"), ProtectedToken),
+				Token(Text("open"), OpenToken),
+				Token(Text("close"), CloseToken),
+				Token(Text("exner"), ExnerToken),
+				Token(Text("inner"), InnerToken),
+				Token(Text("external"), ExternalToken),
+				Token(Text("internal"), InternalToken),
+				Token(Text("sealed"), SealedToken),
+				Token(Text("abstract"), AbstractToken),
+				Token(Text("final"), FinalToken),
+				Token(Text("native"), NativeToken),
+				Token(Text("function"), FunctionToken),
+				Token(Text("neutral"), NeutralToken),
+				Token(Character('0'), NeutralToken)
 		);
 	}
 
@@ -68,7 +77,7 @@ public class MainTokenizer extends LexerTokenizer {
 										)
 								)
 						),
-						TokenType.WordToken
+						IdentifierToken
 				)
 		);
 	}
@@ -77,31 +86,65 @@ public class MainTokenizer extends LexerTokenizer {
 		return Alternatives(
 				Token(
 						Sequence(
-								Optional(
-										Alternatives(
-												Character('-'),
-												Character('+')
-										)
-								),
 								CharacterRange('1', '9'),
-								ZeroOrMore(CharacterRange('0', '9')),
-								Character('.'),
-								ZeroOrMore(CharacterRange('0', '9'))
-						),
-						TokenType.DecimalNumberToken
+								ZeroOrMore(
+										CharacterRange('0', '9')
+								), Optional(
+										Alternatives(
+												Character('n'),
+												Character('b'),
+												Character('s'),
+												Character('i'),
+												Character('l'),
+												Character('f'),
+												Character('d'),
+												Character('N'),
+												Character('B'),
+												Character('S'),
+												Character('I'),
+												Character('L'),
+												Character('F'),
+												Character('D')
+										)
+								)
+						), new RuleAction() {
+							@Override
+							public Enum<?> execute(String value) {
+								if (value.endsWith("b") || value.endsWith("B")) return ByteToken;
+								if (value.endsWith("s") || value.endsWith("S")) return ShortToken;
+								if (value.endsWith("i") || value.endsWith("I")) return IntegerToken;
+								if (value.endsWith("l") || value.endsWith("L")) return LongToken;
+								if (value.endsWith("f") || value.endsWith("F")) return FloatToken;
+								if (value.endsWith("d") || value.endsWith("D")) return DoubleToken;
+								if (value.endsWith("n") || value.endsWith("N")) return NumberToken;
+								return NumberToken;
+							}
+						}
 				),
 				Token(
 						Sequence(
-								Optional(
-										Alternatives(
-												Character('-'),
-												Character('+')
-										)
-								),
 								CharacterRange('1', '9'),
-								ZeroOrMore(CharacterRange('0', '9'))
-						),
-						TokenType.NumberToken
+								ZeroOrMore(
+										CharacterRange('0', '9')
+								), Character('.'), ZeroOrMore(
+										CharacterRange('0', '9')
+								), Alternatives(
+										Character('n'),
+										Character('f'),
+										Character('d'),
+										Character('N'),
+										Character('F'),
+										Character('D')
+								)
+						), new RuleAction() {
+							@Override
+							public Enum<?> execute(String value) {
+								if (value.endsWith("f") || value.endsWith("F")) return FloatToken;
+								if (value.endsWith("d") || value.endsWith("D")) return DoubleToken;
+								if (value.endsWith("n") || value.endsWith("N")) return NumberToken;
+								return NumberToken;
+							}
+						}
 				)
 		);
 	}
@@ -122,14 +165,14 @@ public class MainTokenizer extends LexerTokenizer {
 										Not(
 												Alternatives(
 														Character('"'),
-														CharacterRange('\n'),
-														CharacterRange('\f')
+														Character('\n'),
+														Character('\f')
 												)
 										)
 								),
 								Character('"')
 						),
-						com.example.code.tmp.Main.ExtraTokenType.StringLiteralToken
+						StringLiteralToken
 				),
 				Token(
 						Sequence(
@@ -137,35 +180,38 @@ public class MainTokenizer extends LexerTokenizer {
 								Not(Character('\'')),
 								Character('\'')
 						),
-						Main.ExtraTokenType.CharacterLiteralToken
+						CharacterLiteralToken
 				)
 		);
 	}
 
 	public Rule characters() {
 		return Alternatives(
-				Token(Character(';'), TokenType.SemiColonToken),
-				Token(Character(':'), TokenType.ColonToken),
-				Token(Character('.'), TokenType.PointToken),
-				Token(Character(','), TokenType.CommaToken),
-				Token(Character('='), TokenType.EqualToken),
-				Token(Character('-'), TokenType.MinusToken),
-				Token(Character('+'), TokenType.PlusToken),
-				Token(Character('('), TokenType.ParenthesisLeftToken),
-				Token(Character(')'), TokenType.ParenthesisRightToken),
-				Token(Character('['), TokenType.SquareLeftToken),
-				Token(Character(']'), TokenType.SquareRightToken),
-				Token(Character('{'), TokenType.CurlyLeftToken),
-				Token(Character('}'), TokenType.CurlyRightToken),
-				Token(Character('>'), TokenType.GreaterToken),
-				Token(Character('<'), TokenType.LessToken),
-				Token(Character('&'), TokenType.AmpersandToken),
-				Token(Character('|'), TokenType.VerticalLineToken),
-				Token(Character('?'), TokenType.QuestionToken),
-				Token(Character('!'), TokenType.ExclamationToken),
-				Token(Character('_'), TokenType.LowLineToken),
-				Token(Character('"'), TokenType.QuotationToken),
-				Token(Character('\''), TokenType.ApostropheToken)
+				Token(Text("->"), ArrowToken),
+				Token(Character(';'), SemiColonToken),
+				Token(Character(':'), ColonToken),
+				Token(Character('.'), PointToken),
+				Token(Character(','), CommaToken),
+				Token(Character('='), EqualToken),
+				Token(Character('-'), MinusToken),
+				Token(Character('+'), PlusToken),
+				Token(Character('*'), StarToken),
+				Token(Character('/'), SlashToken),
+				Token(Character('('), ParenthesisLeftToken),
+				Token(Character(')'), ParenthesisRightToken),
+				Token(Character('['), SquareLeftToken),
+				Token(Character(']'), SquareRightToken),
+				Token(Character('{'), CurlyLeftToken),
+				Token(Character('}'), CurlyRightToken),
+				Token(Character('>'), GreaterToken),
+				Token(Character('<'), LessToken),
+				Token(Character('&'), AmpersandToken),
+				Token(Character('|'), VerticalLineToken),
+				Token(Character('?'), QuestionToken),
+				Token(Character('!'), ExclamationToken),
+				Token(Character('_'), LowLineToken),
+				Token(Character('"'), QuotationToken),
+				Token(Character('\''), ApostropheToken)
 		);
 	}
 }

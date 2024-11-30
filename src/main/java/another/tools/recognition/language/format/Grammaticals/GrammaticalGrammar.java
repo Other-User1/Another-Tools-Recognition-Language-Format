@@ -1,13 +1,13 @@
 package another.tools.recognition.language.format.Grammaticals;
 
-import another.tools.recognition.language.format.tokens.Token;
+import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GrammaticalGrammar implements Grammatical {
-	private final Grammatical grammars;
+	public Grammatical grammars;
 
 	public GrammaticalGrammar(Grammatical grammars) {
 		this.grammars = grammars;
@@ -26,12 +26,14 @@ public abstract class GrammaticalGrammar implements Grammatical {
 			subResult.addAll(matched);
 		}
 
-		ArrayList<Grammatical> tmp = new ArrayList<>();
-		tmp.add(grammars);
-		tmp.addAll(execute(subResult));
+		ArrayList<Grammatical> tmp2 = new ArrayList<>(grammars.getGrammars());
+		tmp2.addAll(new ArrayList<>(List.of(execute(subResult))));
+
+		SequenceGrammatical tmp = new SequenceGrammatical(tmp2);
+		grammars.getGrammars().clear();
 
 		ArrayList<Token> result = new ArrayList<>();
-		ArrayList<Grammatical> subFinal = new ArrayList<>(tmp);
+		ArrayList<Grammatical> subFinal = new ArrayList<>(tmp.getGrammars());
 
 		for (Grammatical rule : subFinal) {
 			ArrayList<Token> matched = rule.match(list, position);
@@ -42,10 +44,13 @@ public abstract class GrammaticalGrammar implements Grammatical {
 			position += matched.size();
 		}
 
+		grammars = new SequenceGrammatical(subFinal);
+
 		return result;
 	}
 
 	private <E> ArrayList<E> subList(ArrayList<E> list, int start, int end) {
+		if (end >= list.size()) end -= 1;
 		ArrayList<E> es = new ArrayList<>();
 		for (; start < end; start++) {
 			es.add(list.get(start));
@@ -54,13 +59,13 @@ public abstract class GrammaticalGrammar implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Grammatical> getGrammars() {
-		return new ArrayList<>(List.of(grammars));
+	public final ArrayList<Grammatical> getGrammars() throws CompilerTaskException {
+		return null;
 	}
 
-	public abstract ArrayList<Grammatical> execute(ArrayList<Token> tokens) throws CompilerTaskException;
+	public abstract Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException;
 
 	public interface Action {
-		public ArrayList<Grammatical> execute(ArrayList<Token> tokens) throws CompilerTaskException;
+		public Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException;
 	}
 }
