@@ -4,6 +4,8 @@ import another.tools.recognition.language.format.Lexers.LexerTokenizer;
 import another.tools.recognition.language.format.Rules.Rule;
 import another.tools.recognition.language.format.Rules.RuleAction;
 
+import java.util.ArrayList;
+
 import static another.tools.recognition.language.format.Tokens.TokenType.*;
 
 import static com.example.code.ExtraTokenType.*;
@@ -109,14 +111,14 @@ public class MainTokenizer extends LexerTokenizer {
 								)
 						), new RuleAction() {
 							@Override
-							public Enum<?> execute(String value) {
-								if (value.endsWith("b") || value.endsWith("B")) return ByteToken;
-								if (value.endsWith("s") || value.endsWith("S")) return ShortToken;
-								if (value.endsWith("i") || value.endsWith("I")) return IntegerToken;
-								if (value.endsWith("l") || value.endsWith("L")) return LongToken;
-								if (value.endsWith("f") || value.endsWith("F")) return FloatToken;
-								if (value.endsWith("d") || value.endsWith("D")) return DoubleToken;
-								if (value.endsWith("n") || value.endsWith("N")) return NumberToken;
+							public Enum<?> execute(ArrayList<String> value) {
+								if (value.getLast().equals("b") || value.getLast().equals("B")) return ByteToken;
+								if (value.getLast().equals("s") || value.getLast().equals("S")) return ShortToken;
+								if (value.getLast().equals("i") || value.getLast().equals("I")) return IntegerToken;
+								if (value.getLast().equals("l") || value.getLast().equals("L")) return LongToken;
+								if (value.getLast().equals("f") || value.getLast().equals("F")) return FloatToken;
+								if (value.getLast().equals("d") || value.getLast().equals("D")) return DoubleToken;
+								if (value.getLast().equals("n") || value.getLast().equals("N")) return NumberToken;
 								return NumberToken;
 							}
 						}
@@ -138,10 +140,10 @@ public class MainTokenizer extends LexerTokenizer {
 								)
 						), new RuleAction() {
 							@Override
-							public Enum<?> execute(String value) {
-								if (value.endsWith("f") || value.endsWith("F")) return FloatToken;
-								if (value.endsWith("d") || value.endsWith("D")) return DoubleToken;
-								if (value.endsWith("n") || value.endsWith("N")) return NumberToken;
+							public Enum<?> execute(ArrayList<String> value) {
+								if (value.getLast().equals("f") || value.getLast().equals("F")) return FloatToken;
+								if (value.getLast().equals("d") || value.getLast().equals("D")) return DoubleToken;
+								if (value.getLast().equals("n") || value.getLast().equals("N")) return NumberToken;
 								return NumberToken;
 							}
 						}

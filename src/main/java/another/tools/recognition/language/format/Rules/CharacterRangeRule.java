@@ -1,6 +1,9 @@
 package another.tools.recognition.language.format.Rules;
 
-public class CharacterRangeRule implements Rule {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CharacterRangeRule extends Rule {
 	private final char min;
 	private final char max;
 
@@ -10,11 +13,11 @@ public class CharacterRangeRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) {
+	public ArrayList<String> match(String input, int position) {
 		if (position < input.length()) {
 			char c = input.charAt(position);
 			if (c >= min && c <= max) {
-				return String.valueOf(c);
+				return new ArrayList<>(List.of(String.valueOf(c)));
 			}
 		}
 		return null;

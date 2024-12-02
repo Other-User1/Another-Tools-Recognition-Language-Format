@@ -2,7 +2,9 @@ package another.tools.recognition.language.format.Rules;
 
 import com.java.components.lang.CompilerTaskException;
 
-public class OptionalRule implements Rule {
+import java.util.ArrayList;
+
+public class OptionalRule extends Rule {
 	private final Rule rule;
 
 	public OptionalRule(Rule rule) {
@@ -10,8 +12,8 @@ public class OptionalRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) throws CompilerTaskException {
-		String matched = rule.match(input, position);
-		return matched != null ? matched : "";
+	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
+		ArrayList<String> matched = rule.match(input, position);
+		return matched != null ? matched : new ArrayList<>();
 	}
 }

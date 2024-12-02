@@ -43,10 +43,10 @@ public enum TokenType implements Grammatical {
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) {
 		TokenType.position = position;
-		if (list.get(position).getImage().equals("\0")) {
-			return new ArrayList<>(list.subList(position - 1, position));
+		if (list.get(position).getType().name().equals("EndOfFileToken")) {
+			return new ArrayList<>();
 		}
-		if (list.get(position).getType().toString().equals(name())) {
+		if (list.get(position).getType().name().equals(name())) {
 			grammar = new SequenceGrammatical((Grammatical) list.get(position).getType());
 			return new ArrayList<>(list.subList(position, position + 1));
 		}

@@ -1,8 +1,11 @@
 package another.tools.recognition.language.format.Rules;
 
-public class AnyRule implements Rule {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnyRule extends Rule {
 	@Override
-	public String match(String input, int position) {
-		return position < input.length() ? String.valueOf(input.charAt(position)) : null;
+	public ArrayList<String> match(String input, int position) {
+		return position < input.length() ? new ArrayList<>(List.of(String.valueOf(input.charAt(position)))) : null;
 	}
 }

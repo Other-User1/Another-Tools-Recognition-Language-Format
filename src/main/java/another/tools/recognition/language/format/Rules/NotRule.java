@@ -1,8 +1,12 @@
 package another.tools.recognition.language.format.Rules;
 
+import another.tools.recognition.language.format.Tokens.TokenText;
 import com.java.components.lang.CompilerTaskException;
 
-public class NotRule implements Rule {
+import java.util.ArrayList;
+import java.util.List;
+
+public class NotRule extends Rule {
 	private final Rule rule;
 
 	public NotRule(Rule rule) {
@@ -10,13 +14,11 @@ public class NotRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) throws CompilerTaskException {
-		String value = rule.match(input, position);
+	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
+		ArrayList<String> value = rule.match(input, position);
 		if (value == null) {
-			if (this.rule instanceof TextRule tr) {
-				return input.substring(position, position + tr.text.length());
-			}
-			return input.substring(position, position + 1);
+			if (rule instanceof TextRule tr) new ArrayList<>(List.of(input.substring(position, position + tr.text.length())));
+			return new ArrayList<>(List.of(input.substring(position, position + 1)));
 		}
 		return null;
 	}

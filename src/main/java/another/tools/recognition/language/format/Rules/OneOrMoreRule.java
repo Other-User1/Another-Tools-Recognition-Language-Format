@@ -2,7 +2,9 @@ package another.tools.recognition.language.format.Rules;
 
 import com.java.components.lang.CompilerTaskException;
 
-public class OneOrMoreRule implements Rule {
+import java.util.ArrayList;
+
+public class OneOrMoreRule extends Rule {
 	private final Rule rule;
 
 	public OneOrMoreRule(Rule rule) {
@@ -10,19 +12,19 @@ public class OneOrMoreRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) throws CompilerTaskException {
-		StringBuilder result = new StringBuilder();
-		String matched = rule.match(input, position);
+	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
+		ArrayList<String> result = new ArrayList<>();
+		ArrayList<String> matched = rule.match(input, position);
 
 		if (matched == null) {
 			return null;
 		}
 
 		while (position < input.length() && (matched = rule.match(input, position)) != null) {
-			result.append(matched);
-			position += matched.length();
+			result.addAll(matched);
+			position += getPosition(matched);
 		}
 
-		return result.toString();
+		return result;
 	}
 }

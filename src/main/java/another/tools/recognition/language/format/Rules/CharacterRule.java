@@ -1,6 +1,9 @@
 package another.tools.recognition.language.format.Rules;
 
-public class CharacterRule implements Rule {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CharacterRule extends Rule {
 	private final char character;
 
 	public CharacterRule(char character) {
@@ -8,7 +11,7 @@ public class CharacterRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) {
-		return (position < input.length() && input.charAt(position) == character) ? String.valueOf(character) : null;
+	public ArrayList<String> match(String input, int position) {
+		return (position < input.length() && input.charAt(position) == character) ? new ArrayList<>(List.of(String.valueOf(character))) : null;
 	}
 }

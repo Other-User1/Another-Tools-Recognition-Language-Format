@@ -2,7 +2,9 @@ package another.tools.recognition.language.format.Rules;
 
 import com.java.components.lang.CompilerTaskException;
 
-public class RepeatRule implements Rule {
+import java.util.ArrayList;
+
+public class RepeatRule extends Rule {
 	private final Rule rule;
 	private final int permit;
 
@@ -12,18 +14,18 @@ public class RepeatRule implements Rule {
 	}
 
 	@Override
-	public String match(String input, int position) throws CompilerTaskException {
-		StringBuilder result = new StringBuilder();
-		String matched;
-		final String match = rule.match(input, position);
+	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
+		ArrayList<String> result = new ArrayList<>();
+		ArrayList<String> matched;
+		final ArrayList<String> match = rule.match(input, position);
 
 		while (position < input.length() && (matched = rule.match(input, position)) != null) {
-			result.append(matched);
-			position += matched.length();
+			result.addAll(matched);
+			position += getPosition(matched);
 		}
 
-		if (result.length() == match.repeat(permit).length()) {
-			return result.toString();
+		if (result.size() == (match.size() * permit)) {
+			return result;
 		}
 
 		return null;

@@ -11,13 +11,12 @@ import java.util.ArrayList;
 
 public final class Syntactic {
 	private final ArrayList<Token> tokens;
-	private final ArrayList<Token> listToken;
 	private SyntacticGrammatical grammaticalRules;
 	private int position;
 
 	public Syntactic(Lexer lx) throws CompilerTaskException {
+		//ArrayList<Token> sub = lx.tokenize();
 		this.tokens = lx.tokenize();
-		this.listToken = tokens;
 	}
 
 	public void setSyntacticGrammar(SyntacticGrammatical syntacticGrammatical) throws CompilerTaskException {
@@ -33,16 +32,17 @@ public final class Syntactic {
 	public void onSyntactic() throws CompilerTaskException {
 		if (this.grammaticalRules == null)
 			throw new CompilerTaskException();
-		while (this.position <= this.tokens.size()) {
+		while (this.position <= this.tokens.size() - 1) {
 			Pair pair = isMatch(grammaticalRules.run());
 			if (pair.booleans()) {
 				this.position = this.position + pair.tokens().size();
 				continue;
 			}
 
-			if (this.tokens.get((this.position + 1 >= this.tokens.size() ? (this.position == this.tokens.size() ? this.position - 1 : this.position) : this.position + 1)).getType() == SpecialTokenType.EndOfFileToken)
+			if (this.tokens.get(this.position).getType() == SpecialTokenType.EndOfFileToken)
 				return;
-			throw new CompilerTaskException("Error in: " + this.tokens.get(this.position).getImage() + ", position: " + this.position);
+			else
+				throw new CompilerTaskException("Error in: " + this.tokens.get(this.position).getImage() + ", position: " + this.position);
 			// return;
 		}
 	}

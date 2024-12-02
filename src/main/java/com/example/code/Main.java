@@ -12,13 +12,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static another.tools.recognition.language.format.Tokens.TokenType.*;
+import static com.example.code.ExtraTokenType.IdentifierToken;
 
 @SuppressWarnings( { "unused" } )
 public class Main {
 	public static void main(String[] args) throws CompilerTaskException {
 
 		Lexer lexer = getLexer(new File("test.txt"));
-		lexer.tokenize().forEach(token -> System.out.print(token.getType().name() + ' '));
 		Syntactic syntactic = getSyntactic(lexer);
 		syntactic.onSyntactic();
 	}
@@ -29,16 +29,8 @@ public class Main {
 			@Override
 			public Grammatical run() throws CompilerTaskException {
 				return Action(
-						GrammaticalAction(
-								Sequence(
-										NumberToken, PlusToken, NumberToken
-								), new GrammaticalAction.Action() {
-									@Override
-									public Token run(ArrayList<Token> tokens) {
-										int sum = Integer.parseInt(tokens.getFirst().getImage()) + Integer.parseInt(tokens.getLast().getImage());
-										return Token(sum, TokenType.NumberToken);
-									}
-								}
+						Sequence(
+								variable()
 						), new SyntacticAction() {
 							@Override
 							public void execute(ArrayList<Token> tokens) throws CompilerTaskException {
@@ -46,6 +38,24 @@ public class Main {
 								System.out.println();
 							}
 						}
+				);
+			}
+
+			public Grammatical variable() {
+				return Sequence(
+						IdentifierToken, ColonToken, IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), SemiColonToken
+				);
+			}
+
+			public Grammatical initialize() {
+				return Sequence(
+						EqualToken, NumberToken
+				);
+			}
+
+			public Grammatical addMoreVariable() {
+				return Sequence(
+						CommaToken, IdentifierToken, Optional(initialize())
 				);
 			}
 		});

@@ -71,9 +71,7 @@ public final class Lexer {
 			System.err.println("Please add more type for more tokens!");
 			try {
 				Thread.sleep(2500);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
+			} catch (InterruptedException e) { }
 		}
 		return this.tokens;
 	}
@@ -81,15 +79,30 @@ public final class Lexer {
 	private Token matchRule(Rule rule) throws CompilerTaskException {
 		if (rule == null) return null;
 		int oldPosition = this.position;
-		String value = rule.match(this.input, this.position);
-		if (value != null) {
-			this.position += value.length();
+		ArrayList<String> list = rule.match(this.input, this.position);
+		if (list != null) {
+			this.position += getPosition(list);
+			String value = getString(list);
 			if (value.length() == 1) {
 				return new Token(value, getType(value), this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
 			}
 			return new Token(value, getType(value), oldPosition, this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
 		}
 		return null;
+	}
+
+	private String getString(ArrayList<String> list) {
+		StringBuilder newString = new StringBuilder();
+		for (String element : list)
+			newString.append(element);
+		return newString.toString();
+	}
+
+	public int getPosition(ArrayList<String> list) {
+		int newPosition = 0;
+		for (String element : list)
+			newPosition = newPosition + element.length();
+		return newPosition;
 	}
 
 	private Enum<?> getType(String key) {
