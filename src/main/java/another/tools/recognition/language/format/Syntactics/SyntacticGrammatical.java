@@ -32,6 +32,10 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return new OneOrMoreGrammatical(grammar);
 	}
 
+	public static final MoreGrammatical More(Grammatical grammatical) {
+		return new MoreGrammatical(grammatical);
+	}
+
 	public static final OptionalGrammatical Optional(Grammatical optional) {
 		return new OptionalGrammatical(optional);
 	}
@@ -96,11 +100,15 @@ public abstract class SyntacticGrammatical implements Grammatical {
 	}
 
 	public static final Grammatical toGrammar(ArrayList<Grammatical> grammaticals) {
-		return Sequence(grammaticals.toArray(new Grammatical[0]));
+		return toGrammar(grammaticals.toArray(new Grammatical[0]));
 	}
 
 	public static final Grammatical toGrammar(Grammatical... grammaticals) {
 		return Sequence(grammaticals);
+	}
+
+	public static final AnyGrammatical Any() {
+		return new AnyGrammatical();
 	}
 
 	public abstract Grammatical run() throws CompilerTaskException;
@@ -109,6 +117,4 @@ public abstract class SyntacticGrammatical implements Grammatical {
 	public final ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		throw new CompilerTaskException("Unsupported method!");
 	}
-
-	// public static final Grammatical EOF() { return Text("\0"); }
 }

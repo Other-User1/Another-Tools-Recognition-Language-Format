@@ -42,6 +42,10 @@ public abstract class LexerTokenizer extends Rule {
 		return new OneOrMoreRule(rule);
 	}
 
+	public final MoreRule More(Rule rule) {
+		return new MoreRule(rule);
+	}
+
 	public final RangeRule Range(Rule rule, int min, int max) {
 		return new RangeRule(rule, min, max);
 	}

@@ -44,7 +44,7 @@ public class Main {
 
 			public Grammatical variableGrammar() {
 				return Sequence(
-						IdentifierToken, Skip(ColonToken), IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), Skip(SemiColonToken)
+						IdentifierToken, Skip(ColonToken), IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), Optional(Skip(SemiColonToken))
 				);
 			}
 
