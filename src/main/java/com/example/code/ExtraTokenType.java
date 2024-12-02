@@ -31,7 +31,14 @@ public enum ExtraTokenType implements Grammatical {
 	FunctionToken,
 	FloatNumberToken,
 	DoubleNumberToken,
-	IdentifierToken, ArrowToken, IntegerToken, ByteToken, ShortToken, LongToken, FloatToken, DoubleToken;
+	IdentifierToken,
+	ArrowToken,
+	IntegerToken,
+	ByteToken,
+	ShortToken,
+	LongToken,
+	FloatToken,
+	DoubleToken;
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
