@@ -8,16 +8,10 @@ import java.util.List;
 
 public final class SequenceGrammatical implements Grammatical {
 	private final ArrayList<Grammatical> grammars;
-	//private boolean skip;
 
 	public SequenceGrammatical(Grammatical... grammars) {
 		this.grammars = new ArrayList<>(List.of(grammars));
 	}
-
-	/*public SequenceGrammatical(boolean skip, Grammatical... grammars) {
-		this.grammars = new ArrayList<>(List.of(grammars));
-		this.skip = skip;
-	}*/
 
 	SequenceGrammatical(ArrayList<Grammatical> tmp2) {
 		grammars = tmp2;
@@ -33,19 +27,10 @@ public final class SequenceGrammatical implements Grammatical {
 				return null;
 			}
 
-			//if (skip) matched = skip(matched);
-
 			result.addAll(matched);
 			position += matched.size();
 		}
 		return result;
-	}
-
-	private ArrayList<Token> skip(ArrayList<Token> list) {
-		ArrayList<Token> newList = new ArrayList<>();
-		for (Token element : list)
-			newList.add(new Token(element.getImage(), element.getType(), "Skip"));
-		return newList;
 	}
 
 	public ArrayList<Grammatical> getGrammars() {
