@@ -6,7 +6,6 @@ import another.tools.recognition.language.format.Tokens.TokenText;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class SyntacticGrammatical implements Grammatical {

@@ -7,7 +7,6 @@ import another.tools.recognition.language.format.Tokens.Token;
 import another.tools.recognition.language.format.Tokens.TokenText;
 import another.tools.recognition.language.format.Tokens.TokenType;
 import com.java.components.lang.CompilerTaskException;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

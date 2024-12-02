@@ -4,7 +4,6 @@ import another.tools.recognition.language.format.Tokens.Token;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AnyGrammatical implements Grammatical {
 	@Override

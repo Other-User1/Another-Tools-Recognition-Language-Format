@@ -1,6 +1,5 @@
 package another.tools.recognition.language.format.Rules;
 
-import another.tools.recognition.language.format.Tokens.TokenText;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;

@@ -24,7 +24,7 @@ public class Main {
 		Syntactic sa = new Syntactic(lx);
 		sa.setSyntacticGrammar(new SyntacticGrammatical() {
 			@Override
-			public Grammatical run() throws CompilerTaskException {
+			public Grammatical run() {
 				return OneOrMore(variable());
 			}
 
@@ -34,7 +34,7 @@ public class Main {
 								variableGrammar()
 						), new SyntacticAction() {
 							@Override
-							public void execute(ArrayList<Token> tokens) throws CompilerTaskException {
+							public void execute(ArrayList<Token> tokens) {
 								tokens.forEach(token -> System.out.print(token.getImage() + ' '));
 								System.out.println();
 							}

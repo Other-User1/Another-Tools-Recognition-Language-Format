@@ -58,6 +58,10 @@ public abstract class LexerTokenizer extends Rule {
 		return new NotRule(rule);
 	}
 
+	public final GroupRule Group(Rule rule) {
+		return new GroupRule(rule);
+	}
+
 	public final Rules SubRules(Rules rule) {
 		return rule;
 	}

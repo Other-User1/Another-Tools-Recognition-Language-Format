@@ -17,7 +17,7 @@ public class RangeRule extends Rule {
 
 	@Override
 	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		ArrayList<String> matched;
 		final ArrayList<String> match = rule.match(input, position);
 

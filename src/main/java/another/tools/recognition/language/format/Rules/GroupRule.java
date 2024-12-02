@@ -7,25 +7,23 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GroupRule extends Rule {
-	private final List<Rule> rules;
+	private final Rule rule;
 
-	public GroupRule(Rule... rules) {
-		this.rules = Arrays.asList(rules);
+	public GroupRule(Rule rules) {
+		this.rule = rules;
 	}
 
 	@Override
 	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
 		StringBuilder sb = new StringBuilder();
 
-		for (Rule rule : rules) {
-			ArrayList<String> matched = rule.match(input, position);
-			if (matched == null) {
-				return null;
-			}
-			for (String element : matched)
-				sb.append(element);
-			position += getPosition(matched);
+		ArrayList<String> matched = rule.match(input, position);
+		if (matched == null) {
+			return null;
 		}
+		for (String element : matched)
+			sb.append(element);
+
 		return new ArrayList<>(List.of(sb.toString()));
 	}
 }
