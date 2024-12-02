@@ -17,10 +17,7 @@ import static com.example.code.ExtraTokenType.IdentifierToken;
 @SuppressWarnings( { "unused" } )
 public class Main {
 	public static void main(String[] args) throws CompilerTaskException {
-
-		Lexer lexer = getLexer(new File("test.txt"));
-		Syntactic syntactic = getSyntactic(lexer);
-		syntactic.onSyntactic();
+		getSyntactic(getLexer(new File("test.txt"))).onSyntactic();
 	}
 
 	private static Syntactic getSyntactic(Lexer lx) throws CompilerTaskException {
@@ -28,9 +25,13 @@ public class Main {
 		sa.setSyntacticGrammar(new SyntacticGrammatical() {
 			@Override
 			public Grammatical run() throws CompilerTaskException {
+				return OneOrMore(variable());
+			}
+
+			public Grammatical variable() {
 				return Action(
 						Sequence(
-								variable()
+								variableGrammar()
 						), new SyntacticAction() {
 							@Override
 							public void execute(ArrayList<Token> tokens) throws CompilerTaskException {
@@ -41,9 +42,9 @@ public class Main {
 				);
 			}
 
-			public Grammatical variable() {
+			public Grammatical variableGrammar() {
 				return Sequence(
-						IdentifierToken, ColonToken, IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), SemiColonToken
+						IdentifierToken, Skip(ColonToken), IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), Skip(SemiColonToken)
 				);
 			}
 

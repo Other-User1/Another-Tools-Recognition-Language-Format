@@ -14,6 +14,21 @@ public class Token {
 	private final int line;
 	private final int id;
 
+	public Token(String image, Enum<?> type, String nameType) {
+		this.image = image;
+		this.type = type;
+		this.nameType = nameType;
+		this.beginPosition = -1;
+		this.endPosition = -1;
+		this.beginColumn = -1;
+		this.endColumn = -1;
+		this.position = -1;
+		this.line = -1;
+		this.beginLine = -1;
+		this.endLine = -1;
+		this.id = -1;
+	}
+
 	public Token(char image, Enum<?> type) {
 		this(String.valueOf(image), type);
 	}

@@ -1,1 +1,2 @@
-test: main = 154, test = 1547;
+test: main = 154, test2, test = 1547;
+test: amin = 123;

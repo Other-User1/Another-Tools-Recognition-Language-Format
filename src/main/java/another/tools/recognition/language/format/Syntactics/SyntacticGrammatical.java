@@ -16,6 +16,10 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return new SequenceGrammatical(grammars);
 	}
 
+	public static final SkipGrammatical Skip(Grammatical grammar) {
+		return new SkipGrammatical(grammar);
+	}
+
 	public static final AlternativesGrammatical Alternatives(Grammatical... alternatives) {
 		return new AlternativesGrammatical(alternatives);
 	}
@@ -72,9 +76,17 @@ public abstract class SyntacticGrammatical implements Grammatical {
 			public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 				ArrayList<Token> tokens = grammatical.match(list, position);
 				if (tokens != null) {
-					action.execute(tokens);
+					action.execute(skip(tokens));
 				}
 				return tokens;
+			}
+
+			private ArrayList<Token> skip(ArrayList<Token> oldList) {
+				ArrayList<Token> newList = new ArrayList<>();
+				for (Token element : oldList)
+					if (!element.getNameType().equals("Skip"))
+						newList.add(element);
+				return newList;
 			}
 		};
 	}
@@ -98,5 +110,5 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		throw new CompilerTaskException("Unsupported method!");
 	}
 
-	public static final Grammatical EOF() { return Text("\0"); }
+	// public static final Grammatical EOF() { return Text("\0"); }
 }

@@ -4,8 +4,10 @@ import another.tools.recognition.language.format.Grammaticals.*;
 import another.tools.recognition.language.format.Lexers.Lexer;
 import another.tools.recognition.language.format.Tokens.SpecialTokenType;
 import another.tools.recognition.language.format.Tokens.Token;
+import another.tools.recognition.language.format.Tokens.TokenText;
 import another.tools.recognition.language.format.Tokens.TokenType;
 import com.java.components.lang.CompilerTaskException;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public final class Syntactic {
 		if (this.grammaticalRules == null)
 			throw new CompilerTaskException();
 		while (this.position <= this.tokens.size() - 1) {
-			Pair pair = isMatch(grammaticalRules.run());
+			Pair pair = isMatch(new SequenceGrammatical(grammaticalRules.run(), new TokenText("\0")));
 			if (pair.booleans()) {
 				this.position = this.position + pair.tokens().size();
 				continue;
