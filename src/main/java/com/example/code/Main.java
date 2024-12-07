@@ -2,8 +2,6 @@ package com.example.code;
 
 import another.tools.recognition.language.format.Syntactics.*;
 import another.tools.recognition.language.format.Lexers.*;
-import another.tools.recognition.language.format.Tokens.*;
-import another.tools.recognition.language.format.Grammaticals.*;
 
 import com.java.components.lang.CompilerTaskException;
 
@@ -36,26 +34,4 @@ public class Main {
 	private static void optionsLexer(Lexer lexer) throws CompilerTaskException {
 		lexer.setLexerTokenizer(new MainTokenizer());
 	}
-
-	public static String ParseTree(Grammatical grammar, int tab) throws CompilerTaskException {
-		StringBuilder sb = new StringBuilder();
-		for (Object g : grammar.getGrammars()) {
-			if (g instanceof TokenType tt) {
-				sb.append(" ".repeat(tab)).append(tt.name());
-				sb.append("\n");
-				continue;
-			}
-			if (g instanceof TokenText tt) {
-				sb.append(" ".repeat(tab)).append(tt.getText());
-				sb.append("\n");
-				continue;
-			}
-			if (g instanceof Grammatical g2) {
-				sb.append(ParseTree(g2, tab + (tab / 3)));
-			}
-		}
-		return sb.toString();
-	}
-
-	public String parseTree;
 }
