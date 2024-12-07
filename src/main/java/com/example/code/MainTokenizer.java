@@ -1,12 +1,10 @@
 package com.example.code;
 
-import another.tools.recognition.language.format.Lexers.LexerTokenizer;
-import another.tools.recognition.language.format.Rules.Rule;
-import another.tools.recognition.language.format.Rules.RuleAction;
+import another.tools.recognition.language.format.Lexers.*;
+import another.tools.recognition.language.format.Rules.*;
+import static another.tools.recognition.language.format.Tokens.TokenType.*;
 
 import java.util.ArrayList;
-
-import static another.tools.recognition.language.format.Tokens.TokenType.*;
 
 import static com.example.code.ExtraTokenType.*;
 

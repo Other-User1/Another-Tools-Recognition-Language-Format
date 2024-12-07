@@ -8,3 +8,5 @@ plugins {
 }
 
 rootProject.name = 'ATRLF'
+include 'ATRLFC'
+

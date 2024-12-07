@@ -1,65 +1,23 @@
 package com.example.code;
 
-import another.tools.recognition.language.format.Grammaticals.*;
-import another.tools.recognition.language.format.Lexers.*;
 import another.tools.recognition.language.format.Syntactics.*;
-
+import another.tools.recognition.language.format.Lexers.*;
 import another.tools.recognition.language.format.Tokens.*;
+import another.tools.recognition.language.format.Grammaticals.*;
 
 import com.java.components.lang.CompilerTaskException;
 
 import java.io.File;
-import java.util.ArrayList;
-
-import static another.tools.recognition.language.format.Tokens.TokenType.*;
-import static com.example.code.ExtraTokenType.IdentifierToken;
 
 @SuppressWarnings( { "unused" } )
 public class Main {
-	public static void main(String[] args) throws CompilerTaskException {
+	public static void main(String[] args) throws Exception {
 		getSyntactic(getLexer(new File("test.txt"))).onSyntactic();
 	}
 
 	private static Syntactic getSyntactic(Lexer lx) throws CompilerTaskException {
 		Syntactic sa = new Syntactic(lx);
-		sa.setSyntacticGrammar(new SyntacticGrammatical() {
-			@Override
-			public Grammatical run() {
-				return OneOrMore(variable());
-			}
-
-			public Grammatical variable() {
-				return Action(
-						Sequence(
-								variableGrammar()
-						), new SyntacticAction() {
-							@Override
-							public void execute(ArrayList<Token> tokens) {
-								tokens.forEach(token -> System.out.print(token.getImage() + ' '));
-								System.out.println();
-							}
-						}
-				);
-			}
-
-			public Grammatical variableGrammar() {
-				return Sequence(
-						IdentifierToken, Skip(ColonToken), IdentifierToken, Optional(initialize()), ZeroOrMore(addMoreVariable()), Skip(Optional(SemiColonToken))
-				);
-			}
-
-			public Grammatical initialize() {
-				return Sequence(
-						EqualToken, NumberToken
-				);
-			}
-
-			public Grammatical addMoreVariable() {
-				return Sequence(
-						CommaToken, IdentifierToken, Optional(initialize())
-				);
-			}
-		});
+		sa.setSyntacticGrammar(new MainGrammatical.VariableDeclarationGrammar());
 		return sa;
 	}
 

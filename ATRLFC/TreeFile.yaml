@@ -1,0 +1,59 @@
+java:
+    another:
+        tools:
+            recognition:
+                language:
+                    format:
+                        Grammaticals:
+                            - AlternativesGrammatical
+                            - AnyGrammatical
+                            - ErrorGrammatical
+                            - Grammar
+                            - Grammatical
+                            - ActionGrammatical
+                            - GrammarGrammatical
+                            - MoreGrammatical
+                            - NotGrammatical
+                            - OneOrMoreGrammatical
+                            - OptionalGrammatical
+                            - RangeGrammatical
+                            - RepeatGrammatical
+                            - SequenceGrammatical
+                            - SkipGrammatical
+                            - ZeroOrMoreGrammatical
+                        Lexers:
+                            - BetterLexerTokenizer
+                            - Lexer
+                            - LexerTokenizer
+                        Rules:
+                            - ActionRule
+                            - AlternativesRule
+                            - AnyRule
+                            - CharacterRangeRule
+                            - CharacterRule
+                            - GroupRule
+                            - MoreRule
+                            - NotRule
+                            - OneOrMoreRule
+                            - OptionalRule
+                            - RangeRule
+                            - RepeatRule
+                            - Rule
+                            - Rules
+                            - SequenceRule
+                            - TextRule
+                            - ZeroOrMoreRule
+                        Syntactics:
+                            - BetterSyntacticGrammatical
+                            - Syntactic
+                            - SyntacticAction
+                            - SyntacticGrammatical
+                        Tokens:
+                            - GrammaticalToken
+                            - RepeatToken
+                            - SequenceToken
+                            - SpecialTokenType
+                            - Token
+                            - Tokens
+                            - TokenText
+                            - TokenType

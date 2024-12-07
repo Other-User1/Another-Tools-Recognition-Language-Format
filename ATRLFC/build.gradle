@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
 }
 
 group = 'com.example.code'
@@ -12,12 +11,10 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'lib', include: ['*.jar'])
-    implementation(project("ATRLFC"))
 }
 
-application {
-    applicationDefaultJvmArgs = ["-Dproject.name=${project.name}", "-DmainClassName=com.example.code.Main"]
-    mainClassName = 'com.example.code.Main'
+test {
+    useJUnitPlatform()
 }
 
 compileJava {
