@@ -56,7 +56,7 @@ public class MainGrammatical {
 		public Grammatical Term() {
 			return Recursive(() ->
 					Alternatives(
-							Number(), Sequence(Text('('), addAndSub(), Text(')'))
+							NumberToken, Sequence(Text('('), addAndSub(), Text(')'))
 					)
 			);
 		}

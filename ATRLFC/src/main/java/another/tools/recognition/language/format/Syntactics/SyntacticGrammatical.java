@@ -60,8 +60,8 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return new RepeatGrammatical(rule, count);
 	}
 
-	protected final GrammaticalAction GrammaticalAction(Grammatical grammar, GrammaticalAction.Action action) {
-		return new GrammaticalAction(grammar) {
+	protected final ActionGrammatical GrammaticalAction(Grammatical grammar, ActionGrammatical.Action action) {
+		return new ActionGrammatical(grammar) {
 			@Override
 			public ArrayList<Token> run(ArrayList<Token> tokens) {
 				return new ArrayList<>(action.run(tokens).getTokens());
@@ -69,8 +69,8 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		};
 	}
 
-	protected final GrammaticalGrammar GrammaticalGrammar(Grammatical grammar, GrammaticalGrammar.Action action) {
-		return new GrammaticalGrammar(grammar) {
+	protected final GrammarGrammatical GrammaticalGrammar(Grammatical grammar, GrammarGrammatical.Action action) {
+		return new GrammarGrammatical(grammar) {
 			@Override
 			public Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException {
 				return action.execute(tokens);

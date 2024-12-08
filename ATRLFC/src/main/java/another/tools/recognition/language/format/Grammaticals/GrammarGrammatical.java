@@ -6,10 +6,10 @@ import com.java.components.lang.CompilerTaskException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GrammaticalGrammar implements Grammatical {
+public abstract class GrammarGrammatical implements Grammatical {
 	public Grammatical grammars;
 
-	public GrammaticalGrammar(Grammatical grammars) {
+	public GrammarGrammatical(Grammatical grammars) {
 		this.grammars = grammars;
 	}
 

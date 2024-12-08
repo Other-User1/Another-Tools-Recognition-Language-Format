@@ -8,10 +8,10 @@ import com.java.components.lang.CompilerTaskException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GrammaticalAction implements Grammatical {
+public abstract class ActionGrammatical implements Grammatical {
 	private final Grammatical grammars;
 
-	public GrammaticalAction(Grammatical grammars) {
+	public ActionGrammatical(Grammatical grammars) {
 		this.grammars = grammars;
 	}
 

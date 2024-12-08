@@ -5,17 +5,18 @@ java:
                 language:
                     format:
                         Grammaticals:
+                            - ActionGrammatical
                             - AlternativesGrammatical
                             - AnyGrammatical
                             - ErrorGrammatical
                             - Grammar
-                            - Grammatical
-                            - ActionGrammatical
                             - GrammarGrammatical
+                            - Grammatical
                             - MoreGrammatical
                             - NotGrammatical
                             - OneOrMoreGrammatical
                             - OptionalGrammatical
+                            - OptionalOrMoreGrammatical
                             - RangeGrammatical
                             - RepeatGrammatical
                             - SequenceGrammatical
