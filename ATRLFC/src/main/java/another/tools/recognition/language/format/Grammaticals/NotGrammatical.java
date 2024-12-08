@@ -15,7 +15,7 @@ public class NotGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> tokens = grammatical.match(list, position);
 		if (tokens == null) {
 			return new ArrayList<>(list.subList(position, ParseTree(grammatical, position)));

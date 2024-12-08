@@ -14,7 +14,7 @@ public class ZeroOrMoreGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		if (grammar instanceof GrammaticalGrammar) throw new CompilerTaskException("cannot first is GrammaticalGrammar!");
 		ArrayList<Token> matched = grammar.match(list, position);
 
@@ -25,10 +25,16 @@ public class ZeroOrMoreGrammatical implements Grammatical {
 		ArrayList<Token> result = new ArrayList<>(matched);
 		position += matched.size();
 
-		while (position < list.size() && (matched = grammar.match(list, position)) != null) {
+		matched = grammar.match(list, position);
+
+		if (matched == null) {
+			return null;
+		}
+
+		do {
 			result.addAll(matched);
 			position += matched.size();
-		}
+		} while (position < list.size() && (matched = grammar.match(list, position)) != null);
 
 		return result;
 	}

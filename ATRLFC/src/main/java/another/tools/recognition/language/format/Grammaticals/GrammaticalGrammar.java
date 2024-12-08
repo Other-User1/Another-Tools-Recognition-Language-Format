@@ -14,7 +14,7 @@ public abstract class GrammaticalGrammar implements Grammatical {
 	}
 
 	@Override
-	public final ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public final ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> subResult = new ArrayList<>();
 		ArrayList<Token> cutList = subList(list, position, position + grammars.getGrammars().size());
 
@@ -66,6 +66,6 @@ public abstract class GrammaticalGrammar implements Grammatical {
 	public abstract Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException;
 
 	public interface Action {
-		public Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException;
+		Grammatical execute(ArrayList<Token> tokens) throws CompilerTaskException;
 	}
 }

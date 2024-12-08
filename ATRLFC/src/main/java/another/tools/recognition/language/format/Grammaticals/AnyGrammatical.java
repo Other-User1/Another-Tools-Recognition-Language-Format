@@ -10,9 +10,4 @@ public class AnyGrammatical implements Grammatical {
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		return new ArrayList<>(list.subList(position, position + 1));
 	}
-
-	@Override
-	public ArrayList<Grammatical> getGrammars() throws CompilerTaskException {
-		return Grammatical.super.getGrammars();
-	}
 }

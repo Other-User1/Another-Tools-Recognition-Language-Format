@@ -6,14 +6,8 @@ import another.tools.recognition.language.format.Tokens.TokenText;
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public abstract class SyntacticGrammatical implements Grammatical {
-	// HashMap<ArrayList<Token>, SyntacticAction> actions = new HashMap<>();
-
 	protected final SequenceGrammatical Sequence(Grammatical... grammars) {
 		return new SequenceGrammatical(grammars);
 	}
@@ -26,7 +20,11 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return new AlternativesGrammatical(alternatives);
 	}
 
-	protected final ZeroOrMoreGrammatical ZeroOrMore(Grammatical grammar) {
+	protected final OptionalOrMoreGrammatical OptionalOrMore(Grammatical grammar) { // es el "ZeroOrMore" (se puede una 0, 1 o mas)
+		return new OptionalOrMoreGrammatical(grammar);
+	}
+
+	protected final ZeroOrMoreGrammatical ZeroOrMore(Grammatical grammar) { // solo se puede "0" o mas de dos veces!
 		return new ZeroOrMoreGrammatical(grammar);
 	}
 
@@ -83,7 +81,7 @@ public abstract class SyntacticGrammatical implements Grammatical {
 	protected final Grammatical Action(Grammatical grammatical, SyntacticAction action) {
 		return new Grammatical() {
 			@Override
-			public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+			public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 				ArrayList<Token> tokens = grammatical.match(list, position);
 				if (tokens != null) {
 					action.execute(skip(tokens));
@@ -113,7 +111,7 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return Sequence(grammaticals);
 	}
 
-	protected final ErrorGrammatical Error(Grammatical grammatical, Exception error) {
+	protected final ErrorGrammatical Error(Grammatical grammatical, CompilerTaskException error) {
 		return new ErrorGrammatical(grammatical, error);
 	}
 

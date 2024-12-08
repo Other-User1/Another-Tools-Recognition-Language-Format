@@ -16,7 +16,7 @@ public abstract class GrammaticalAction implements Grammatical {
 	}
 
 	@Override
-	public final ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public final ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> cutList = new ArrayList<>(list.subList(position, position + this.grammars.getGrammars().size()));
 
 		ArrayList<Token> matched = this.grammars.match(cutList, position);
@@ -37,9 +37,5 @@ public abstract class GrammaticalAction implements Grammatical {
 
 	public static abstract class Action extends GrammaticalToken {
 		public abstract Tokens run(ArrayList<Token> tokens);
-		/*public final Token Token(String image, Enum<?> type) { return new Token(image, type); }
-		public final Token Token(Number image, Enum<?> type) { return Token(String.valueOf(image), type); }
-		public final Token Token(boolean image, Enum<?> type) { return Token(String.valueOf(image), type); }
-		public final Token Token(char image, Enum<?> type) { return Token(String.valueOf(image), type); }*/
 	}
 }

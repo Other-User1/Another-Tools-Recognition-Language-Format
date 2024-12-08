@@ -11,6 +11,6 @@ public abstract class Grammar extends SyntacticGrammatical implements Grammatica
 
 	@Override
 	public ArrayList<Grammatical> getGrammars() throws CompilerTaskException {
-		return new ArrayList<>(List.of(run()));
+		return Grammatical.toGrammatical(run());
 	}
 }

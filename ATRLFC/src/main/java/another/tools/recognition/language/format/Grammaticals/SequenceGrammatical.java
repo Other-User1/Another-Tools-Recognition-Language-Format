@@ -18,7 +18,7 @@ public final class SequenceGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> result = new ArrayList<>();
 
 		for (Grammatical rule : grammars) {

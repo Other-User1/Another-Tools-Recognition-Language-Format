@@ -18,7 +18,7 @@ public class RecursiveGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		return resolvedGrammar.getRecursive() != null ? resolvedGrammar.getRecursive().match(list, position) : null;
 	}
 }

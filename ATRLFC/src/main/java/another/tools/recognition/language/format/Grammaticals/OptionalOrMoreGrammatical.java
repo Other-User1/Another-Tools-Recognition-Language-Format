@@ -6,28 +6,24 @@ import com.java.components.lang.CompilerTaskException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoreGrammatical implements Grammatical {
+public class OptionalOrMoreGrammatical implements Grammatical {
 	private final Grammatical grammar;
 
-	public MoreGrammatical(Grammatical grammar) {
+	public OptionalOrMoreGrammatical(Grammatical grammar) {
 		this.grammar = grammar;
 	}
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
-		ArrayList<Token> result = new ArrayList<>();
-		ArrayList<Token> matched;
+		if (grammar instanceof GrammaticalGrammar) throw new CompilerTaskException("cannot first is GrammaticalGrammar!");
+		ArrayList<Token> matched = grammar.match(list, position);
 
-		for (int index = 0; index < 2; index++) {
-			matched = grammar.match(list, position);
-
-			if (matched == null) {
-				return null;
-			}
-
-			result.addAll(matched);
-			position += matched.size();
+		if (matched == null) {
+			return new ArrayList<>();
 		}
+
+		ArrayList<Token> result = new ArrayList<>(matched);
+		position += matched.size();
 
 		while (position < list.size() && (matched = grammar.match(list, position)) != null) {
 			result.addAll(matched);

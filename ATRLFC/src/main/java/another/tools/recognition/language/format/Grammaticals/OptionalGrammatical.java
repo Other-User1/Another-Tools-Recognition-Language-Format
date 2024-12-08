@@ -14,7 +14,7 @@ public class OptionalGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> matched = rule.match(list, position);
 		return matched == null ? new ArrayList<>() : matched;
 	}

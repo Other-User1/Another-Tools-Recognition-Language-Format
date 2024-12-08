@@ -16,7 +16,7 @@ public class RepeatGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		final ArrayList<Token> match = rule.match(list, position);
 		ArrayList<Token> matched = rule.match(list, position);
 

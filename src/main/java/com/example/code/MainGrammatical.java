@@ -4,13 +4,10 @@ import another.tools.recognition.language.format.Syntactics.*;
 import another.tools.recognition.language.format.Tokens.*;
 import another.tools.recognition.language.format.Grammaticals.*;
 import static another.tools.recognition.language.format.Tokens.TokenType.*;
-import static com.example.code.ExtraTokenType.IdentifierToken;
-import static com.example.code.ExtraTokenType.NeutralToken;
 
 import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
 
 public class MainGrammatical {
 
@@ -34,7 +31,7 @@ public class MainGrammatical {
 
 		public Grammatical addAndSub() {
 			return Sequence(
-					mulAndDiv(), ZeroOrMore(
+					mulAndDiv(), OptionalOrMore(
 							Sequence(
 									Alternatives(
 											Text('+'), Text('-')
@@ -46,7 +43,7 @@ public class MainGrammatical {
 
 		public Grammatical mulAndDiv() {
 			return Sequence(
-					Term(), ZeroOrMore(
+					Term(), OptionalOrMore(
 							Sequence(
 									Alternatives(
 											Text('*'), Text('/')
@@ -66,7 +63,7 @@ public class MainGrammatical {
 
 		public Grammatical Number() {
 			return Sequence(
-					Digit(), ZeroOrMore(Digit())
+					Digit(), OptionalOrMore(Digit())
 			);
 		}
 

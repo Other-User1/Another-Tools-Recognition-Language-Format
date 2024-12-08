@@ -50,7 +50,7 @@ public enum TokenType implements Grammatical {
 		return null;
 	}
 
-	public static ArrayList<Token> isMatchUtil(ArrayList<Token> list, int position, String name) {
+	public static ArrayList<Token> match(ArrayList<Token> list, int position, String name) {
 		TokenType.position = position;
 		if (list.get(position).getType().toString().equals(name)) {
 			return new ArrayList<>(list.subList(position, position + 1));
@@ -58,7 +58,7 @@ public enum TokenType implements Grammatical {
 		return null;
 	}
 
-	public static ArrayList<Grammatical> getGrammarUtil(String name) {
+	public static ArrayList<Grammatical> getGrammars(String name) {
 		return new ArrayList<>(List.of(new TokenText(name)));
 	}
 

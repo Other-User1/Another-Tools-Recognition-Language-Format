@@ -102,7 +102,7 @@ public final class Lexer {
 		return newString.toString();
 	}
 
-	public int getPosition(ArrayList<String> list) {
+	private int getPosition(ArrayList<String> list) {
 		int newPosition = 0;
 		for (String element : list)
 			newPosition = newPosition + element.length();

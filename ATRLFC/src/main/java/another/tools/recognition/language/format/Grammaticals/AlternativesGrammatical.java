@@ -14,7 +14,7 @@ public class AlternativesGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		for (Grammatical grammar : grammars) {
 			ArrayList<Token> matched = grammar.match(list, position);
 			if (matched != null) {

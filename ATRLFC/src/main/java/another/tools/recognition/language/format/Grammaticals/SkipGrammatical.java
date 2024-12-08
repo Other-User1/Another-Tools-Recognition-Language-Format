@@ -14,7 +14,7 @@ public class SkipGrammatical implements Grammatical {
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> matched = grammar.match(list, position);
 		if (matched == null) return null;
 		matched = skip(matched);

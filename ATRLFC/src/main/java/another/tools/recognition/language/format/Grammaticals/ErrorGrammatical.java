@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class ErrorGrammatical implements Grammatical {
 	private final Grammatical grammatical;
-	private final Exception error;
+	private final CompilerTaskException error;
 
-	public ErrorGrammatical(Grammatical grammar, Exception error) {
+	public ErrorGrammatical(Grammatical grammar, CompilerTaskException error) {
 		this.grammatical = grammar;
 		this.error = error;
 	}
 
 	@Override
-	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException, Exception {
+	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
 		ArrayList<Token> matched = grammatical.match(list, position);
 		if (matched == null) {
 			throw error;
@@ -25,6 +25,6 @@ public class ErrorGrammatical implements Grammatical {
 
 	@Override
 	public ArrayList<Grammatical> getGrammars() throws CompilerTaskException {
-		return toGrammatical(grammatical);
+		return Grammatical.toGrammatical(grammatical);
 	}
 }
