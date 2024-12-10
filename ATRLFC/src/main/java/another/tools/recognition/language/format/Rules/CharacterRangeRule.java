@@ -3,7 +3,7 @@ package another.tools.recognition.language.format.Rules;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterRangeRule extends Rule {
+public class CharacterRangeRule implements Rule {
 	private final char min;
 	private final char max;
 

@@ -42,18 +42,25 @@ public enum TokenType implements Grammatical {
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) {
-		TokenType.position = position;
+		/*TokenType.position = position;
 		if (list.get(position).getType().name().equals(name())) {
 			grammar = new SequenceGrammatical((Grammatical) list.get(position).getType());
 			return new ArrayList<>(list.subList(position, position + 1));
 		}
-		return null;
+		return null;*/
+		return TokenType.match(list, position, name());
 	}
 
 	public static ArrayList<Token> match(ArrayList<Token> list, int position, String name) {
 		TokenType.position = position;
-		if (list.get(position).getType().toString().equals(name)) {
+		if (list.get(position).getType() != null && list.get(position).getType().toString().equals(name)) {
 			return new ArrayList<>(list.subList(position, position + 1));
+		} if (list.get(position).getTypes() != null) {
+			for (Enum<?> typing : list.get(position).getTypes()) {
+				if (typing.toString().equals(name)) {
+					return new ArrayList<>(list.subList(position, position + 1));
+				}
+			}
 		}
 		return null;
 	}
@@ -64,7 +71,7 @@ public enum TokenType implements Grammatical {
 
 	@Override
 	public ArrayList<Grammatical> getGrammars() {
-		return new ArrayList<>(List.of(grammar));
+		return TokenType.getGrammars(name());
 	}
 
 	public static int getPosition() {

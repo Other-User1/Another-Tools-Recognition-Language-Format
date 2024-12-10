@@ -32,17 +32,14 @@ public final class Syntactic {
 	public void onSyntactic() throws Exception {
 		if (this.grammaticalRules == null)
 			throw new CompilerTaskException();
-		while (this.position <= this.tokens.size() - 1) {
-			Pair pair = isMatch(new SequenceGrammatical(grammaticalRules.run(), new TokenText("\3")));
+		while (this.position < this.tokens.size()) {
+			Pair pair = isMatch(new SequenceGrammatical(grammaticalRules.run(), SpecialTokenType.EndOfFileToken));
 			if (pair.booleans()) {
 				this.position = this.position + pair.tokens().size();
 				continue;
 			}
 
-			if (this.tokens.get(this.position).getType() == SpecialTokenType.EndOfFileToken)
-				return;
-			else
-				throw new CompilerTaskException("Error in: '" + this.tokens.get(this.position).getImage() + "', position: " + this.position);
+			throw new CompilerTaskException("Error in: '" + this.tokens.get(this.position).getImage() + "', position: " + this.position);
 			// return;
 		}
 	}

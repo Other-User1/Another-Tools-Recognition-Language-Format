@@ -2,6 +2,8 @@ package com.example.code;
 
 import another.tools.recognition.language.format.Lexers.*;
 import another.tools.recognition.language.format.Rules.*;
+import com.java.components.lang.CompilerTaskException;
+
 import static another.tools.recognition.language.format.Tokens.TokenType.*;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import static com.example.code.ExtraTokenType.*;
 
 public class MainTokenizer extends LexerTokenizer {
 	@Override
-	public Rule skip() {
+	public Rule skip() throws CompilerTaskException {
 		return OneOrMore(
 				Alternatives(
 					Character(' '),
@@ -23,16 +25,16 @@ public class MainTokenizer extends LexerTokenizer {
 	}
 
 	@Override
-	public Rule execute() {
+	public Rule execute() throws CompilerTaskException {
 		return Alternatives(
-				keywords(),
+				//keywords(),
 				identifiers(),
 				ordinals(),
 				punctuation()
 		);
 	}
 
-	public Rule keywords() {
+	public Rule keywords() throws CompilerTaskException {
 		return Alternatives(
 				Token(Text("module"), ModuleToken),
 				Token(Text("package"), PackageToken),
@@ -53,11 +55,12 @@ public class MainTokenizer extends LexerTokenizer {
 				Token(Text("native"), NativeToken),
 				Token(Text("function"), FunctionToken),
 				Token(Text("neutral"), NeutralToken),
-				Token(Character('0'), NeutralToken)
+				Token(Character('0'), NeutralToken),
+				Token(Text("for"), ForToken)
 		);
 	}
 
-	public Rule identifiers() {
+	public Rule identifiers() throws CompilerTaskException {
 		return Alternatives(
 				Token(
 						Sequence(
@@ -65,7 +68,7 @@ public class MainTokenizer extends LexerTokenizer {
 										CharacterRange('a', 'z'),
 										CharacterRange('A', 'Z')
 								),
-								ZeroOrMore(
+								OptionalOrMore(
 										Alternatives(
 												Alternatives(
 														CharacterRange('a', 'z'),
@@ -82,41 +85,39 @@ public class MainTokenizer extends LexerTokenizer {
 		);
 	}
 
-	public Rule ordinals() {
+	public Rule ordinals() throws CompilerTaskException {
 		return Alternatives(
 				Token(
 						Sequence(
 								CharacterRange('1', '9'),
-								ZeroOrMore(
+								OptionalOrMore(
 										CharacterRange('0', '9')
-								), Optional(
-										Alternatives(
-												Character('n'),
-												Character('b'),
-												Character('s'),
-												Character('i'),
-												Character('l'),
-												Character('f'),
-												Character('d'),
-												Character('N'),
-												Character('B'),
-												Character('S'),
-												Character('I'),
-												Character('L'),
-												Character('F'),
-												Character('D')
-										)
+								), Alternatives(
+										Character('n'),
+										Character('b'),
+										Character('s'),
+										Character('i'),
+										Character('l'),
+										Character('f'),
+										Character('d'),
+										Character('N'),
+										Character('B'),
+										Character('S'),
+										Character('I'),
+										Character('L'),
+										Character('F'),
+										Character('D')
 								)
-						), new RuleAction() {
+						), new RulesRule() {
 							@Override
-							public Enum<?> execute(ArrayList<String> value) {
+							public Enum<?> execute(ArrayList<String> value) throws CompilerTaskException {
 								if (value.getLast().equals("b") || value.getLast().equals("B")) return ByteToken;
 								if (value.getLast().equals("s") || value.getLast().equals("S")) return ShortToken;
 								if (value.getLast().equals("i") || value.getLast().equals("I")) return IntegerToken;
 								if (value.getLast().equals("l") || value.getLast().equals("L")) return LongToken;
 								if (value.getLast().equals("f") || value.getLast().equals("F")) return FloatToken;
 								if (value.getLast().equals("d") || value.getLast().equals("D")) return DoubleToken;
-								if (value.getLast().equals("n") || value.getLast().equals("N")) return NumberToken;
+								// if (value.getLast().equals("n") || value.getLast().equals("N")) return NumberToken;
 								return NumberToken;
 							}
 						}
@@ -124,9 +125,9 @@ public class MainTokenizer extends LexerTokenizer {
 				Token(
 						Sequence(
 								CharacterRange('1', '9'),
-								ZeroOrMore(
+								OptionalOrMore(
 										CharacterRange('0', '9')
-								), Character('.'), ZeroOrMore(
+								), Character('.'), OptionalOrMore(
 										CharacterRange('0', '9')
 								), Alternatives(
 										Character('n'),
@@ -136,7 +137,7 @@ public class MainTokenizer extends LexerTokenizer {
 										Character('F'),
 										Character('D')
 								)
-						), new RuleAction() {
+						), new RulesRule() {
 							@Override
 							public Enum<?> execute(ArrayList<String> value) {
 								if (value.getLast().equals("f") || value.getLast().equals("F")) return FloatToken;
@@ -149,19 +150,19 @@ public class MainTokenizer extends LexerTokenizer {
 		);
 	}
 
-	public Rule punctuation() {
+	public Rule punctuation() throws CompilerTaskException {
 		return Alternatives(
 				symbols(),
 				characters()
 		);
 	}
 
-	public Rule symbols() {
+	public Rule symbols() throws CompilerTaskException {
 		return Alternatives(
 				Token(
 						Sequence(
 								Character('"'),
-								ZeroOrMore(
+								OptionalOrMore(
 										Not(
 												Alternatives(
 														Character('"'),
@@ -185,7 +186,7 @@ public class MainTokenizer extends LexerTokenizer {
 		);
 	}
 
-	public Rule characters() {
+	public Rule characters() throws CompilerTaskException {
 		return Alternatives(
 				Token(Text("->"), ArrowToken),
 				Token(Character(';'), SemiColonToken),

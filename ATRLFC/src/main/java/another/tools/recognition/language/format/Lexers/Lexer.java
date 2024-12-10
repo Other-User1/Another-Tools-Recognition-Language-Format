@@ -88,9 +88,17 @@ public final class Lexer {
 			this.position += getPosition(list);
 			String value = getString(list);
 			if (value.length() == 1) {
+				 if (getTypes(value) != null) {
+					return new Token(value, getTypes(value), this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
+				} else if (getType(value) != null) {
+					return new Token(value, getType(value), this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
+				}
+			}
+			if (getTypes(value) != null) {
+				return new Token(value, getTypes(value), this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
+			} else if (getType(value) != null) {
 				return new Token(value, getType(value), this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
 			}
-			return new Token(value, getType(value), oldPosition, this.position, 0, lines.get(this.line).length(), this.line, 0, lines.size(), kind);
 		}
 		return null;
 	}
@@ -110,8 +118,20 @@ public final class Lexer {
 	}
 
 	private Enum<?> getType(String key) {
-		HashMap<String, Enum<?>> types = this.lexerTokenizer.types;
+		HashMap<String, Enum<?>> types = this.lexerTokenizer.type;
 		for (Map.Entry<String, Enum<?>> entry : types.entrySet()) {
+			if (entry.getKey() != null) {
+				if (entry.getKey().equals(key)) {
+					return entry.getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	private ArrayList<Enum<?>> getTypes(String key) {
+		HashMap<String, ArrayList<Enum<?>>> types = this.lexerTokenizer.types;
+		for (Map.Entry<String, ArrayList<Enum<?>>> entry : types.entrySet()) {
 			if (entry.getKey() != null) {
 				if (entry.getKey().equals(key)) {
 					return entry.getValue();

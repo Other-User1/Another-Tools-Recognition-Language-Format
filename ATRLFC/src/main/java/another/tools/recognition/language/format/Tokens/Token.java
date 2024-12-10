@@ -6,7 +6,9 @@ import java.util.List;
 public class Token extends Tokens {
 	private final String image;
 	private final Enum<?> type;
+	private final ArrayList<Enum<?>> types;
 	private final String nameType;
+	private final ArrayList<String> nameTypes;
 	private final int beginPosition;
 	private final int endPosition;
 	private final int beginColumn;
@@ -20,7 +22,9 @@ public class Token extends Tokens {
 	public Token(String image, Enum<?> type, String nameType) {
 		this.image = image;
 		this.type = type;
+		this.types = new ArrayList<>();
 		this.nameType = nameType;
+		this.nameTypes = new ArrayList<>();
 		this.beginPosition = -1;
 		this.endPosition = -1;
 		this.beginColumn = -1;
@@ -59,7 +63,26 @@ public class Token extends Tokens {
 	public Token(String image, Enum<?> type, int positionStart, int positionEnd, int columnStart, int columnEnd, int line, int lineStart, int lineEnd, int id) {
 		this.image = image;
 		this.type = type;
+		this.types = new ArrayList<>();
 		this.nameType = type == null ? "UnknownEnum" : type.getDeclaringClass().getSimpleName();
+		this.nameTypes = new ArrayList<>();
+		this.beginPosition = positionStart;
+		this.endPosition = positionEnd;
+		this.beginColumn = columnStart;
+		this.endColumn = columnEnd;
+		this.position = -1;
+		this.line = line;
+		this.beginLine = lineStart;
+		this.endLine = lineEnd;
+		this.id = id;
+	}
+
+	public Token(String image, ArrayList<Enum<?>> types, int positionStart, int positionEnd, int columnStart, int columnEnd, int line, int lineStart, int lineEnd, int id) {
+		this.image = image;
+		this.type = null;
+		this.types = types;
+		this.nameType = "UnknownEnum";
+		this.nameTypes = getTypesNamed(types);
 		this.beginPosition = positionStart;
 		this.endPosition = positionEnd;
 		this.beginColumn = columnStart;
@@ -78,7 +101,9 @@ public class Token extends Tokens {
 	public Token(String image, Enum<?> type, int position, int columnStart, int columnEnd, int line, int lineStart, int lineEnd, int id) {
 		this.image = image;
 		this.type = type;
+		this.types = new ArrayList<>();
 		this.nameType = type == null ? "UnknownEnum" : type.getDeclaringClass().getSimpleName();
+		this.nameTypes = new ArrayList<>();
 		this.beginPosition = -1;
 		this.endPosition = -1;
 		this.beginColumn = columnStart;
@@ -88,6 +113,30 @@ public class Token extends Tokens {
 		this.beginLine = lineStart;
 		this.endLine = lineEnd;
 		this.id = id;
+	}
+
+	public Token(String image, ArrayList<Enum<?>> types, int position, int columnStart, int columnEnd, int line, int lineStart, int lineEnd, int id) {
+		this.image = image;
+		this.type = null;
+		this.types = types;
+		this.nameType = "UnknownEnum";
+		this.nameTypes = getTypesNamed(types);
+		this.beginPosition = -1;
+		this.endPosition = -1;
+		this.beginColumn = columnStart;
+		this.endColumn = columnEnd;
+		this.position = position;
+		this.line = line;
+		this.beginLine = lineStart;
+		this.endLine = lineEnd;
+		this.id = id;
+	}
+
+	private ArrayList<String> getTypesNamed(ArrayList<Enum<?>> types) {
+		ArrayList<String> res = new ArrayList<>();
+		for (Enum<?> type : types)
+			res.add(type.getDeclaringClass().getSimpleName());
+		return res;
 	}
 
 	public Token(String image, Enum<?> type, int position, int line, int lineStart, int lineEnd, int id) {
@@ -100,6 +149,10 @@ public class Token extends Tokens {
 
 	public final Enum<?> getType() {
 		return type;
+	}
+
+	public final ArrayList<Enum<?>> getTypes() {
+		return types;
 	}
 
 	public final String getNameType() {

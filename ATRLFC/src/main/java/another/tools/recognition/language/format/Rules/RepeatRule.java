@@ -4,7 +4,7 @@ import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 
-public class RepeatRule extends Rule {
+public class RepeatRule implements Rule {
 	private final Rule rule;
 	private final int permit;
 
@@ -21,7 +21,7 @@ public class RepeatRule extends Rule {
 
 		while (position < input.length() && (matched = rule.match(input, position)) != null) {
 			result.addAll(matched);
-			position += getPosition(matched);
+			position += Rule.getPosition(matched);
 		}
 
 		if (result.size() == (match.size() * permit)) {

@@ -15,6 +15,14 @@ public interface Grammatical {
 	}
 
 	static ArrayList<Grammatical> toGrammatical(Grammatical... grammatical) {
-		return new ArrayList<>(List.of(grammatical));
+		return toGrammatical(List.of(grammatical));
+	}
+
+	private static ArrayList<Grammatical> toGrammatical(List<Grammatical> grammatical) {
+		return new ArrayList<>(grammatical);
+	}
+
+	static ArrayList<Grammatical> toGrammatical(ArrayList<Grammatical> grammatical) {
+		return new ArrayList<>(grammatical);
 	}
 }

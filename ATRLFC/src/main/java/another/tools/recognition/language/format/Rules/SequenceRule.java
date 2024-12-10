@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SequenceRule extends Rule {
+public class SequenceRule implements Rule {
 	private final List<Rule> rules;
 
 	public SequenceRule(Rule... rules) {
@@ -23,7 +23,7 @@ public class SequenceRule extends Rule {
 				return null;
 			}
 			result.addAll(matched);
-			position += getPosition(matched);
+			position += Rule.getPosition(matched);
 		}
 		return result;
 	}

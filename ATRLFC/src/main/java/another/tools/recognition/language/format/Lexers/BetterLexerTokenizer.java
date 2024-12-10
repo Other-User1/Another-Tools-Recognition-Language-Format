@@ -6,21 +6,21 @@ import com.java.components.lang.CompilerTaskException;
 import java.util.ArrayList;
 
 public abstract class BetterLexerTokenizer extends LexerTokenizer {
-	public final AlternativesRule Characters(char... targets) {
+	public final AlternativesRule Characters(char... targets) throws CompilerTaskException {
 		ArrayList<CharacterRule> cs = new ArrayList<>();
 		for (char target : targets)
 			cs.add(Character(target));
 		return Alternatives(cs.toArray(new CharacterRule[0]));
 	}
 
-	public final AlternativesRule Texts(String... targets) {
+	public final AlternativesRule Texts(String... targets) throws CompilerTaskException {
 		ArrayList<TextRule> cs = new ArrayList<>();
 		for (String target : targets)
 			cs.add(Text(target));
 		return Alternatives(cs.toArray(new TextRule[0]));
 	}
 
-	public final AlternativesRule Repeats(Rule rule, int... counts) {
+	public final AlternativesRule Repeats(Rule rule, int... counts) throws CompilerTaskException {
 		ArrayList<RepeatRule> rs = new ArrayList<>();
 		for (int count : counts)
 			rs.add(Repeat(rule, count));

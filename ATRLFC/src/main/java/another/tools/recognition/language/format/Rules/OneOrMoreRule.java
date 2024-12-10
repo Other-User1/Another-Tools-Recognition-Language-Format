@@ -4,7 +4,7 @@ import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 
-public class OneOrMoreRule extends Rule {
+public class OneOrMoreRule implements Rule {
 	private final Rule rule;
 
 	public OneOrMoreRule(Rule rule) {
@@ -22,7 +22,7 @@ public class OneOrMoreRule extends Rule {
 
 		while (position < input.length() && (matched = rule.match(input, position)) != null) {
 			result.addAll(matched);
-			position += getPosition(matched);
+			position += Rule.getPosition(matched);
 		}
 
 		return result;

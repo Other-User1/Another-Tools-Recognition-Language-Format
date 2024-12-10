@@ -15,7 +15,7 @@ public class OptionalOrMoreGrammatical implements Grammatical {
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
-		if (grammar instanceof GrammarGrammatical) throw new CompilerTaskException("cannot first is GrammaticalGrammar!");
+		// if (grammar instanceof GrammarGrammatical) throw new CompilerTaskException("cannot first is GrammaticalGrammar!");
 		ArrayList<Token> matched = grammar.match(list, position);
 
 		if (matched == null) {

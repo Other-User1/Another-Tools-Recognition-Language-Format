@@ -4,7 +4,7 @@ import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 
-public class OptionalRule extends Rule {
+public class OptionalRule implements Rule {
 	private final Rule rule;
 
 	public OptionalRule(Rule rule) {

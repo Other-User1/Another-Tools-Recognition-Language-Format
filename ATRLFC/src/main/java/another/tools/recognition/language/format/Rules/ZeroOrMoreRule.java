@@ -4,7 +4,7 @@ import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 
-public class ZeroOrMoreRule extends Rule {
+public class ZeroOrMoreRule implements Rule {
 	private final Rule rule;
 
 	public ZeroOrMoreRule(Rule rule) {
@@ -14,11 +14,20 @@ public class ZeroOrMoreRule extends Rule {
 	@Override
 	public ArrayList<String> match(String input, int position) throws CompilerTaskException {
 		ArrayList<String> result = new ArrayList<>();
-		ArrayList<String> matched;
-		while (position < input.length() && (matched = rule.match(input, position)) != null) {
+		ArrayList<String> matched = rule.match(input, position);
+
+		if (matched == null) return result;
+
+		result.addAll(matched);
+		position += Rule.getPosition(matched);
+		matched = rule.match(input, position);
+
+		if (matched == null) return null;
+
+		do {
 			result.addAll(matched);
-			position += getPosition(matched);
-		}
+			position += Rule.getPosition(matched);
+		} while (position < input.length() && (matched = rule.match(input, position)) != null);
 		return result;
 	}
 }

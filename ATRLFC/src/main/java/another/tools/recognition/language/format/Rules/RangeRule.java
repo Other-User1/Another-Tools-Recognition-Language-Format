@@ -4,7 +4,7 @@ import com.java.components.lang.CompilerTaskException;
 
 import java.util.ArrayList;
 
-public class RangeRule extends Rule {
+public class RangeRule implements Rule {
 	private final Rule rule;
 	private final int min;
 	private final int max;
@@ -23,7 +23,7 @@ public class RangeRule extends Rule {
 
 		while (position < input.length() && (matched = rule.match(input, position)) != null) {
 			result.addAll(matched);
-			position += getPosition(matched);
+			position += Rule.getPosition(matched);
 		}
 
 		if (result.size() >= (match.size() * min) && result.size() <= (match.size() * max)) {

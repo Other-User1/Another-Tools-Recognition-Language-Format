@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AlternativesRule extends Rule {
+public class AlternativesRule implements Rule {
 	private final List<Rule> rules;
 
 	public AlternativesRule(Rule... rules) {

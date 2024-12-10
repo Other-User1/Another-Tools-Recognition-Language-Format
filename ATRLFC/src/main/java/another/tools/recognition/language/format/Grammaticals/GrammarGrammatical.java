@@ -50,9 +50,9 @@ public abstract class GrammarGrammatical implements Grammatical {
 	}
 
 	private <E> ArrayList<E> subList(ArrayList<E> list, int start, int end) {
-		if (end >= list.size()) end -= 1;
 		ArrayList<E> es = new ArrayList<>();
 		for (; start < end; start++) {
+			if (start >= list.size()) start = list.size() - 1;
 			es.add(list.get(start));
 		}
 		return es;

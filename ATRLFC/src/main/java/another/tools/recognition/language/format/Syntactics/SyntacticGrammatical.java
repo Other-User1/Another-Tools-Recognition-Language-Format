@@ -103,12 +103,12 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return toGrammar(grammar.getGrammars());
 	}
 
-	protected final Grammatical toGrammar(ArrayList<Grammatical> grammaticals) {
-		return toGrammar(grammaticals.toArray(new Grammatical[0]));
+	protected final Grammatical toGrammar(ArrayList<Grammatical> grammatical) {
+		return toGrammar(grammatical.toArray(new Grammatical[0]));
 	}
 
-	protected final Grammatical toGrammar(Grammatical... grammaticals) {
-		return Sequence(grammaticals);
+	protected final Grammatical toGrammar(Grammatical... grammatical) {
+		return Sequence(grammatical);
 	}
 
 	protected final ErrorGrammatical Error(Grammatical grammatical, CompilerTaskException error) {
@@ -119,9 +119,17 @@ public abstract class SyntacticGrammatical implements Grammatical {
 		return new RecursiveGrammatical(grammatical);
 	}
 
+	protected final AmbiguousGrammatical Ambiguous(Grammatical... grammatical) { // Nueva, verifica que si estan los tokens presente, pero no le interesa el orden, puede consumir mas recursos!
+		return new AmbiguousGrammatical(grammatical);
+	}
+
 	protected final AnyGrammatical Any() {
 		return new AnyGrammatical();
 	}
+
+	protected final EmptyGrammatical Empty() {
+		return new EmptyGrammatical();
+	} // no hace nada
 
 	protected abstract Grammatical run() throws CompilerTaskException;
 

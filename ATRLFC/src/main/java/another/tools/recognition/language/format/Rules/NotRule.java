@@ -5,7 +5,7 @@ import com.java.components.lang.CompilerTaskException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotRule extends Rule {
+public class NotRule implements Rule {
 	private final Rule rule;
 
 	public NotRule(Rule rule) {

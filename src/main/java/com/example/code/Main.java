@@ -10,12 +10,13 @@ import java.io.File;
 @SuppressWarnings( { "unused" } )
 public class Main {
 	public static void main(String[] args) throws Exception {
-		getSyntactic(getLexer(new File("test.txt"))).onSyntactic();
+		Lexer lx = getLexer(new File("test.txt"));
+		getSyntactic(lx).onSyntactic();
 	}
 
 	private static Syntactic getSyntactic(Lexer lx) throws CompilerTaskException {
 		Syntactic sa = new Syntactic(lx);
-		sa.setSyntacticGrammar(new MainGrammatical.VariableDeclarationGrammar());
+		sa.setSyntacticGrammar(new MainGrammatical());
 		return sa;
 	}
 

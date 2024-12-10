@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupRule extends Rule {
+public class GroupRule implements Rule {
 	private final Rule rule;
 
 	public GroupRule(Rule rules) {

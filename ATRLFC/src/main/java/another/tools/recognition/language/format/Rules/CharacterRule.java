@@ -3,7 +3,7 @@ package another.tools.recognition.language.format.Rules;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterRule extends Rule {
+public class CharacterRule implements Rule {
 	private final char character;
 
 	public CharacterRule(char character) {

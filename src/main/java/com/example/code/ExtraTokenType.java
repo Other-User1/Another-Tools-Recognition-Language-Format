@@ -38,7 +38,8 @@ public enum ExtraTokenType implements Grammatical {
 	ShortToken,
 	LongToken,
 	FloatToken,
-	DoubleToken;
+	DoubleToken,
+	ForToken;
 
 	@Override
 	public ArrayList<Token> match(ArrayList<Token> list, int position) throws CompilerTaskException {
